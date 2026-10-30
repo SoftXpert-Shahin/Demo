@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GR Motorcycle — Parts that outlive the bikes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Inter+Tight:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f2e8;--bg2:#eee3cd;--card:#fcf9f2;--ink:#3b2a22;--mute:#8c7b6c;--line:#e2d6bd;--acc:#9c1c1c;--gold:#c9a24f;
+--serif:"Fraunces",Georgia,serif;--sans:"Inter Tight","Helvetica Neue",Arial,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font:400 18px/1.6 var(--sans);overflow-x:hidden}
+body.lock{overflow:hidden}
+a{color:inherit}
+header{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:calc(16px + env(safe-area-inset-top,0px)) 4vw 16px;background:linear-gradient(var(--bg) 45%,transparent)}
+.logo{font:700 22px/1 var(--serif);letter-spacing:-.02em;text-decoration:none;display:flex;align-items:center;gap:11px}
+.logo i{width:34px;height:34px;border-radius:50%;background:var(--acc);color:#fff7e6;display:grid;place-items:center;font:700 12px/1 var(--sans);font-style:normal;box-shadow:0 0 0 3px var(--bg),0 0 0 4px var(--acc)}
+.logo b{color:var(--acc)}
+nav{display:flex;gap:4px;align-items:center}
+nav a{font-size:13px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;color:var(--mute);padding:10px 14px;border-radius:99px;position:relative;transition:.25s}
+nav a:hover,nav a.on{color:var(--acc);background:var(--bg2)}
+nav a.cta{background:var(--acc);color:#fff7e6}
+nav a.cta:hover{background:var(--ink)}
+@media(max-width:860px){nav a:not(.cta){display:none}}
+.page{display:none;min-height:100vh}.page.on{display:block}
+.eyebrow{font:500 12px/1 var(--sans);letter-spacing:.28em;text-transform:uppercase;color:var(--acc);margin-bottom:20px}
+h1,h2{font-family:var(--serif);font-weight:500;letter-spacing:-.035em;line-height:.95}
+h1{font-size:clamp(54px,10.5vw,170px)}
+h2{font-size:clamp(40px,6.4vw,100px)}
+h1 em,h2 em{font-style:italic;color:var(--acc)}
+.lead{color:var(--mute);font-size:clamp(18px,1.6vw,23px);max-width:50ch}
+.sec{padding:16vh 4vw 4vh}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:17vh 4vw 8vh;position:relative;overflow:hidden;background:radial-gradient(circle at 80% 40%,var(--bg2),var(--bg) 62%)}
+.hero .in{position:relative;z-index:2;max-width:1100px}
+canvas.c3{display:block;width:100%;height:100%}
+#hg{position:absolute;right:-6vw;top:50%;width:min(62vw,780px);height:min(62vw,780px);transform:translateY(-46%);z-index:1;pointer-events:none}
+@media(max-width:760px){#hg{width:120vw;height:120vw;right:-40vw;top:64%;opacity:.4}}
+.finder{margin-top:38px;display:flex;flex-wrap:wrap;gap:8px;background:var(--card);border:1px solid var(--line);padding:9px;border-radius:22px;max-width:880px;box-shadow:0 20px 50px rgba(110,80,40,.12)}
+.finder input,.finder select{flex:1 1 140px;min-width:0;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:15px;padding:17px 16px;font:inherit;font-size:15px}
+.finder .pn{flex:2 1 250px}
+.btn,.finder button{background:var(--acc);color:#fff7e6;border:0;border-radius:15px;padding:17px 28px;font:700 13px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;position:relative;overflow:hidden;transition:.3s}
+.btn::before{content:"";position:absolute;inset:0;background:var(--ink);transform:translateY(101%);transition:transform .35s cubic-bezier(.2,.8,.2,1);z-index:0}
+.btn:hover::before{transform:none}.btn span,.btn{z-index:1}
+.btn.k{background:var(--bg2);color:var(--ink)}.btn.k::before{background:var(--acc)}.btn.k:hover{color:#fff7e6}
+.hint{font-size:13px;color:var(--mute);margin-top:12px;max-width:60ch}
+.marq{overflow:hidden;white-space:nowrap;padding:26px 0;background:var(--acc);color:#fff7e6}
+.marq div{display:inline-block;font:italic 500 clamp(30px,4.4vw,64px)/1 var(--serif);animation:mq 30s linear infinite}
+.marq span{margin:0 30px;color:var(--gold)}
+@keyframes mq{to{transform:translateX(-50%)}}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:48px}
+.arrows{display:flex;gap:10px}
+.arrows button{width:58px;height:58px;border-radius:50%;border:1px solid var(--ink);background:transparent;color:var(--ink);font-size:22px;cursor:pointer;transition:.3s}
+.arrows button:hover{background:var(--acc);border-color:var(--acc);color:#fff7e6;transform:scale(1.08)}
+.car{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:10px 4vw 30px;margin:0 -4vw}
+.car::-webkit-scrollbar{display:none}
+.car>*{flex:0 0 min(400px,82vw);scroll-snap-align:start}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+/* shine + tilt */
+.sh{position:relative;overflow:hidden}
+.sh::after{content:"";position:absolute;inset:-60%;pointer-events:none;background:linear-gradient(115deg,transparent 43%,rgba(255,255,255,.85) 50%,rgba(201,162,79,.35) 53%,transparent 60%);transform:translateX(-80%);animation:shn 3.8s ease-in-out infinite;animation-delay:var(--d,0s);mix-blend-mode:soft-light}
+@keyframes shn{0%{transform:translateX(-80%)}55%,100%{transform:translateX(80%)}}
+.dm{position:absolute;width:var(--s,14px);height:var(--s,14px);background:linear-gradient(135deg,#fff,var(--gold));clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);animation:tw 2.6s ease-in-out infinite;animation-delay:var(--d,0s);pointer-events:none;z-index:3}
+@keyframes tw{0%,100%{opacity:0;transform:scale(.2) rotate(0)}50%{opacity:1;transform:scale(1) rotate(90deg)}}
+.tilt{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .25s ease-out,box-shadow .3s,border-color .3s}
+.tilt::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.55),transparent 45%);opacity:0;transition:opacity .3s}
+.tilt:hover::before{opacity:1}
+.tilt:hover{box-shadow:0 30px 60px rgba(110,60,30,.22);border-color:var(--acc)}
+.cat{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:18px;text-decoration:none;display:flex;flex-direction:column;min-height:480px}
+.cat .ph{flex:1;border-radius:20px;background:linear-gradient(145deg,#fffaf0,var(--bg2));display:grid;place-items:center;position:relative;overflow:hidden;transition:.5s}
+.cat:hover .ph{background:linear-gradient(145deg,var(--bg2),#e3d2ab)}
+.cat .ph b{font:italic 500 190px/1 var(--serif);color:var(--acc);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.cat:hover .ph b{transform:scale(1.12) rotate(-5deg)}
+.cat .tg{position:absolute;top:16px;left:16px;font-size:11px;letter-spacing:.16em;font-weight:700;background:var(--acc);color:#fff7e6;padding:6px 12px;border-radius:99px;z-index:3}
+.cat .tg.u{background:var(--gold);color:var(--ink)}
+.cat .tx{padding:20px 8px 6px;display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.cat h3{font:500 30px/1.05 var(--serif);letter-spacing:-.02em}
+.cat small{display:block;color:var(--mute);font-size:14px;margin-top:6px}
+.cat .ar{font-size:30px;color:var(--acc);transition:.3s}.cat:hover .ar{transform:rotate(45deg)}
+.prod{background:var(--card);border:1px solid var(--line);border-radius:28px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;position:relative}
+.prod .art{height:290px;background:radial-gradient(circle at 30% 20%,#fffdf6,var(--bg2));position:relative;display:grid;place-items:center}
+.pipe{width:70%;height:40px;border-radius:40px 8px 8px 40px;background:linear-gradient(#fffdf8,#a79f8d 55%,#e0d8c3);transform:rotate(-14deg);box-shadow:0 22px 28px rgba(110,70,30,.3);transition:transform .5s}
+.prod:hover .pipe{transform:rotate(-6deg) scale(1.08)}
+.tag{position:absolute;top:18px;left:18px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;background:var(--acc);color:#fff7e6;padding:6px 12px;border-radius:99px;font-weight:700;z-index:3}
+.tag.o{background:var(--mute)}
+.prod .t{padding:24px 26px 30px}
+.prod h4{font:500 16px/1.45 var(--sans);margin-bottom:14px}
+.pr{font:500 28px/1 var(--serif);color:var(--acc)}
+/* viewer */
+.viewer{display:grid;grid-template-columns:1fr 1.2fr;gap:5vw;align-items:center;background:var(--bg2);border-radius:40px;margin:0 4vw;padding:8vh 4vw}
+@media(max-width:860px){.viewer{grid-template-columns:1fr}}
+#vg{width:100%;height:min(62vh,560px);cursor:grab;touch-action:pan-y;border-radius:28px;background:radial-gradient(circle at 50% 40%,#fffdf6,var(--bg2) 75%);border:1px solid var(--line)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0}
+.tabs button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:12px 18px;border-radius:99px;font:500 14px var(--sans);cursor:pointer;transition:.3s}
+.tabs button:hover{border-color:var(--acc)}.tabs button.on{background:var(--acc);color:#fff7e6;border-color:var(--acc)}
+/* pinned story */
+.pin{height:calc(var(--n)*100vh)}
+.stick{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:12vh 4vw 6vh;gap:4vw;background:radial-gradient(circle at 25% 50%,var(--bg2),var(--bg) 70%)}
+@media(max-width:860px){.stick{grid-template-columns:1fr;align-content:center}}
+.gearw{position:relative;display:grid;place-items:center}
+.gearw svg{width:min(42vw,560px);height:auto;max-height:60vh;transition:transform .15s linear;filter:drop-shadow(0 30px 30px rgba(110,70,30,.25))}
+@media(max-width:860px){.gearw svg{width:60vw;position:absolute;opacity:.18;z-index:0}}
+.big{position:absolute;font:italic 500 clamp(120px,20vw,300px)/1 var(--serif);color:var(--acc);opacity:.13;letter-spacing:-.05em;left:50%;top:50%;transform:translate(-50%,-50%);z-index:0}
+.chs{position:relative;min-height:340px;z-index:1}
+.ch{position:absolute;inset:0;opacity:0;transform:translateY(50px);transition:opacity .7s,transform .7s cubic-bezier(.2,.8,.2,1);pointer-events:none;display:flex;flex-direction:column;justify-content:center}
+.ch.on{opacity:1;transform:none;pointer-events:auto}
+.ch.pa{transform:translateY(-50px)}
+.ch h3{font:500 clamp(36px,5vw,76px)/1 var(--serif);letter-spacing:-.03em;margin-bottom:20px}
+.ch h3 em{color:var(--acc)}
+.ch p{color:var(--mute);font-size:clamp(18px,1.7vw,24px);max-width:34ch}
+.prog{position:absolute;left:4vw;right:4vw;bottom:5vh;height:3px;background:var(--line);border-radius:3px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--acc)}
+.cnt{position:absolute;top:calc(11vh + env(safe-area-inset-top,0px));right:4vw;font:500 14px var(--sans);letter-spacing:.2em;color:var(--mute);z-index:2}
+/* about cards, reviews */
+.abt{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.abt div{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:40px 34px}
+.abt h3{font:500 34px/1 var(--serif);margin-bottom:14px}.abt p{color:var(--mute)}
+.rev{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:36px 32px;display:flex;flex-direction:column;gap:16px;min-height:290px}
+.rev .st{color:var(--gold);letter-spacing:.2em;font-size:20px}
+.rev p{font:italic 500 22px/1.35 var(--serif)}
+.rev small{color:var(--mute);margin-top:auto}
+.score{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.score b{font:500 80px/1 var(--serif);color:var(--acc)}
+.samp{font-size:12px;background:var(--bg2);border:1px dashed var(--mute);color:var(--mute);padding:6px 12px;border-radius:99px}
+.cta-b{background:linear-gradient(135deg,var(--acc),#6e1212);color:#fff7e6;margin:10vh 4vw;border-radius:40px;padding:12vh 6vw;text-align:center;position:relative}
+.cta-b h2{max-width:14ch;margin:0 auto 24px}.cta-b h2 em{color:var(--gold)}
+.cta-b .eyebrow{color:var(--gold)}.cta-b .lead{margin:0 auto 34px;color:#f1dcc0}
+.cta-b .btn{background:#fff7e6;color:var(--acc)}.cta-b .btn::before{background:var(--gold)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;padding:10vh 4vw;border-block:1px solid var(--line);background:var(--bg2)}
+.stats b{display:block;font:500 clamp(52px,7vw,100px)/1 var(--serif);letter-spacing:-.04em;color:var(--acc)}
+.stats span{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+form.rq{display:grid;gap:14px;max-width:720px;margin-top:36px}
+.rq input,.rq textarea{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:18px;font:inherit}
+.rq textarea{min-height:150px}
+.pay{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.pay span{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:8px 16px;font-size:14px;color:var(--mute)}
+footer{background:var(--bg2);padding:70px 4vw calc(50px + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;color:var(--mute);font-size:14px}
+footer .bigw{width:100%;font:500 clamp(52px,14vw,230px)/.9 var(--serif);letter-spacing:-.05em;color:var(--ink);margin-bottom:30px}
+.sub{display:flex;gap:8px;width:100%;max-width:480px}.sub input{flex:1;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:15px 20px;font:inherit}
+.note{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:25;font-size:11px;color:var(--mute);background:var(--card);border:1px solid var(--line);padding:7px 12px;border-radius:99px}
+#cur{position:fixed;inset:0;z-index:100;background:var(--bg2);color:var(--ink);display:grid;place-items:center;transition:transform .8s cubic-bezier(.76,0,.24,1)}
+#cur.out{transform:translateY(-101%)}#cur.prep{transform:translateY(101%);transition:none}
+#cur .lg{display:flex;flex-direction:column;align-items:center;gap:20px}
+#cur .mk{width:96px;height:96px;border-radius:50%;border:3px solid var(--acc);display:grid;place-items:center;font:700 30px/1 var(--serif);color:var(--acc);animation:sp 2.4s linear infinite;box-shadow:inset 0 0 0 6px var(--bg2),inset 0 0 0 7px var(--gold)}
+#cur .nm{font:italic 500 clamp(30px,5vw,54px)/1 var(--serif)}#cur .nm b{color:var(--acc);font-weight:500}
+#cnt{position:absolute;right:4vw;bottom:5vh;font:500 clamp(80px,17vw,240px)/.8 var(--serif);letter-spacing:-.05em;color:var(--acc)}
+#bar{position:absolute;left:0;bottom:0;height:6px;background:var(--acc);width:0}
+@keyframes sp{50%{transform:rotate(180deg) scale(1.08)}to{transform:rotate(360deg)}}
+.rv{opacity:0;transform:translateY(34px);transition:opacity .8s,transform .8s cubic-bezier(.2,.8,.2,1)}.rv.in{opacity:1;transform:none}
+.cartbtn{position:relative;margin-left:8px;width:46px;height:46px;border-radius:50%;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:.3s}
+.cartbtn:hover{background:var(--acc);color:#fff7e6;border-color:var(--acc)}
+.cartbtn b{position:absolute;top:-7px;right:-7px;min-width:21px;height:21px;border-radius:99px;background:var(--acc);color:#fff7e6;font:700 11px/21px var(--sans);text-align:center;display:none;place-items:center;padding:0 5px;box-shadow:0 0 0 2px var(--bg)}
+.cartbtn.bump{animation:bump .6s}
+@keyframes bump{30%{transform:scale(1.3) rotate(-8deg)}60%{transform:scale(.92)}}
+.add{margin-top:18px;width:100%;background:var(--acc);color:#fff7e6;border:0;border-radius:14px;padding:16px;font:700 13px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:.3s}
+.add:hover{background:var(--ink);transform:translateY(-2px)}
+.add:disabled,.btn:disabled{background:var(--line);color:var(--mute);cursor:not-allowed;transform:none;opacity:.8}
+.fly{position:fixed;z-index:200;width:56px;height:56px;border-radius:50%;background:var(--card);border:2px solid var(--acc);display:grid;place-items:center;box-shadow:0 14px 30px rgba(110,60,30,.35);pointer-events:none}
+#ov{position:fixed;inset:0;background:rgba(59,42,34,.35);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:.4s;z-index:90}
+#ov.open{opacity:1;pointer-events:auto}
+#drawer{position:fixed;top:0;right:0;bottom:0;width:min(480px,100vw);background:var(--bg);z-index:95;transform:translateX(102%);transition:transform .55s cubic-bezier(.76,0,.24,1);display:flex;flex-direction:column;box-shadow:-30px 0 80px rgba(110,60,30,.25)}
+#drawer.open{transform:none}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:calc(26px + env(safe-area-inset-top,0px)) 28px 24px;border-bottom:1px solid var(--line)}
+.dh h3{font:500 34px var(--serif)}
+.dh button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:16px;color:var(--ink)}
+.dlist{flex:1;overflow:auto;padding:6px 28px}
+.df{padding:24px 28px calc(24px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:var(--card);display:grid;gap:12px}
+.row{display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+.row b{font:500 26px var(--serif);color:var(--acc)}
+.df p{font-size:13px;color:var(--mute)}
+.li{display:grid;grid-template-columns:76px 1fr auto;gap:16px;padding:22px 0;border-bottom:1px solid var(--line);align-items:center}
+.li .th{height:76px;border-radius:18px;background:radial-gradient(circle at 30% 20%,#fffdf6,var(--bg2));display:grid;place-items:center;border:1px solid var(--line)}
+.li .th .pipe{width:74%;height:14px;box-shadow:none}
+.li b{font:500 15px/1.35 var(--sans);display:block;margin-bottom:4px}
+.li .inf>span{color:var(--mute);font-size:14px}
+.qty{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.qty button{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--ink);font-size:16px;transition:.2s}
+.qty button:hover{border-color:var(--acc);color:var(--acc)}
+.qty em{min-width:22px;text-align:center;font-style:normal;font-weight:700}
+.qty .rm{width:auto;border:0;background:none;text-decoration:underline;color:var(--mute);font-size:13px;margin-left:6px}
+.lt{font:500 19px var(--serif);color:var(--acc)}
+.empty{padding:70px 0;text-align:center;color:var(--mute)}.empty a{color:var(--acc);font-weight:700}
+.two{display:grid;grid-template-columns:1.5fr 1fr;gap:32px;align-items:start}
+@media(max-width:900px){.two,.two[style]{grid-template-columns:1fr!important}}
+.box{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:10px 32px}
+.box.pd{padding:36px}
+.sum{padding:34px;display:grid;gap:16px;position:sticky;top:110px}
+.sum h3{font:500 34px var(--serif)}
+.tot{border-top:1px solid var(--line);padding-top:16px}
+.perks{display:grid;gap:8px;font-size:14px;color:var(--mute);margin-top:6px}
+.fs{margin-bottom:38px}.fs h3{font:500 30px var(--serif);margin-bottom:16px}
+.fl{display:grid;grid-template-columns:1fr 1fr;gap:12px}.fl .w{grid-column:1/-1}
+@media(max-width:600px){.fl{grid-template-columns:1fr}}
+.fi{background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:16px;font:inherit;width:100%}
+.fi:focus{outline:2px solid var(--acc);outline-offset:1px}
+textarea.fi{min-height:150px}
+.opt{display:flex;justify-content:space-between;gap:14px;align-items:center;border:1px solid var(--line);background:var(--bg);border-radius:16px;padding:18px;cursor:pointer;margin-bottom:10px;transition:.25s}
+.opt:hover{border-color:var(--acc)}
+.opt:has(input:checked){border-color:var(--acc);box-shadow:0 0 0 3px rgba(156,28,28,.12)}
+.opt input{accent-color:var(--acc);margin-right:10px}
+.opt small{color:var(--mute)}
+.ok{display:none;text-align:center;padding:10vh 4vw}
+.ok .ck{width:110px;height:110px;border-radius:50%;background:var(--acc);color:#fff7e6;display:grid;place-items:center;font-size:54px;margin:0 auto 30px}
+.cinfo{display:grid;gap:16px}
+.ic{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:26px 28px}
+.ic h4{font:500 26px var(--serif);margin-bottom:8px}.ic p{color:var(--mute);font-size:16px}.ic a{color:var(--acc);font-weight:700;text-decoration:none}
+.map{height:260px;border-radius:28px;background:radial-gradient(circle,#fffaf0,var(--bg2));border:1px solid var(--line);display:grid;place-items:center;position:relative}
+.map svg{width:70%;height:auto}.map span{position:absolute;bottom:18px;font:italic 500 22px var(--serif)}
+.faq details{border-top:1px solid var(--line);padding:26px 0}.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{font:500 clamp(22px,2.6vw,34px)/1.2 var(--serif);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:20px}
+.faq summary::after{content:"+";color:var(--acc);font-size:34px;line-height:1;transition:.3s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq p{color:var(--mute);margin-top:14px;max-width:64ch}
+footer.ft{display:block;padding:0 0 calc(30px + env(safe-area-inset-bottom,0px))}
+.trust{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;padding:44px 4vw;border-bottom:1px solid var(--line);background:var(--bg)}
+.trust div{display:flex;gap:14px;align-items:center;color:var(--ink);font-weight:500}
+.trust i{width:46px;height:46px;border-radius:50%;background:var(--acc);color:#fff7e6;display:grid;place-items:center;font-style:normal;flex:none}
+.trust small{display:block;color:var(--mute);font-weight:400;font-size:13px}
+.fg{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1.4fr;gap:40px;padding:70px 4vw 30px}
+@media(max-width:1000px){.fg{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.fg{grid-template-columns:1fr}}
+.fg h5{font:700 12px var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--acc);margin-bottom:18px}
+.fg a{display:block;color:var(--ink);text-decoration:none;margin-bottom:0px;font-size:12px;transition:.2s}
+.fg a:hover{color:var(--acc);transform:translateX(4px)}
+.fg p{font-size:15px;margin-bottom:16px}
+footer.ft .bigw{padding:0 4vw;margin:20px 0 10px}
+.fb{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center;padding:26px 4vw 0;border-top:1px solid var(--line);margin:0 0;font-size:13px}
+.fb .pay{margin:0}.fb .pay span{padding:6px 12px;font-size:12px}
+.fb .top{border:1px solid var(--ink);background:none;border-radius:99px;padding:9px 16px;cursor:pointer;color:var(--ink);font:500 13px var(--sans);transition:.3s}.fb .top:hover{background:var(--acc);color:#fff7e6;border-color:var(--acc)}
+.sp .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14em;margin-bottom:-.14em}
+.sp .w>span{display:inline-block;transform:translateY(115%);transition:transform .95s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--k)*.055s)}
+.sp.in .w>span{transform:none}
+#spb{position:fixed;top:0;left:0;height:3px;background:var(--acc);z-index:120;width:0}
+#curg{position:fixed;left:0;top:0;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,79,.3),transparent 65%);pointer-events:none;z-index:1;mix-blend-mode:soft-light;transition:transform .18s ease-out}
+@media(hover:none){#curg{display:none}}
+.badge{position:absolute;right:5vw;bottom:9vh;width:150px;height:150px;z-index:3;display:grid;place-items:center}
+.badge svg{position:absolute;inset:0;width:100%;height:100%;animation:sp 18s linear infinite}
+.badge text{font:700 15px var(--sans);letter-spacing:3.4px;fill:var(--acc)}
+.badge i{width:58px;height:58px;border-radius:50%;background:var(--acc);color:#fff7e6;display:grid;place-items:center;font:700 18px var(--serif);font-style:normal}
+@media(max-width:760px){.badge{display:none}}
+.prod .cov{position:absolute;inset:0;z-index:1}
+.prod .add{position:relative;z-index:7;pointer-events:auto}.prod .cov{z-index:1}.prod .t{position:relative;z-index:4}
+.add.q{background:var(--ink)}.add.q:hover{background:var(--acc)}
+.prod .bk{color:var(--mute);font-size:12px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:8px}
+.lt2{font:italic 500 150px/1 var(--serif);color:var(--acc);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.prod:hover .lt2{transform:scale(1.1) rotate(-5deg)}
+.lt2s{font:italic 500 38px var(--serif);color:var(--acc)}
+.bcn{display:flex;gap:10px;font-size:14px;color:var(--mute);margin-bottom:30px;flex-wrap:wrap}.bcn a{text-decoration:none;color:var(--mute)}.bcn a:hover{color:var(--acc)}.bcn b{color:var(--ink);font-weight:500}
+.chead{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;margin-bottom:50px}
+.bigl{width:min(28vw,300px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 30% 25%,#fffdf6,var(--bg2));border:1px solid var(--line);display:grid;place-items:center;font:italic 500 min(16vw,170px)/1 var(--serif);color:var(--acc);position:relative;overflow:hidden}
+@media(max-width:760px){.chead{grid-template-columns:1fr}.bigl{display:none}}
+.tools{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:26px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:11px 18px;border-radius:99px;font:500 14px var(--sans);cursor:pointer;transition:.3s}
+.chips button:hover{border-color:var(--acc)}.chips button.on{background:var(--acc);border-color:var(--acc);color:#fff7e6}
+.pdg{display:grid;grid-template-columns:1.05fr 1fr;gap:5vw;align-items:start}
+@media(max-width:900px){.pdg{grid-template-columns:1fr}}
+.gal{height:min(70vh,640px);border-radius:36px;background:radial-gradient(circle at 30% 20%,#fffdf6,var(--bg2));border:1px solid var(--line);display:grid;place-items:center;position:relative;overflow:hidden}
+.gal .pipe{width:78%;height:56px}.gal .lt2{font-size:300px}
+.meta{color:var(--mute);font-size:14px;letter-spacing:.06em;margin-top:14px}
+.buy{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:26px 0}
+.q2{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:99px;padding:6px;background:var(--card)}
+.q2 button{width:40px;height:40px;border-radius:50%;border:0;background:var(--bg2);cursor:pointer;font-size:18px;color:var(--ink)}.q2 button:hover{background:var(--acc);color:#fff7e6}
+.q2 em{min-width:34px;text-align:center;font-style:normal;font-weight:700}
+.hsw{position:relative;display:flex;gap:8px;background:var(--card);border:1px solid var(--line);padding:10px;border-radius:26px;box-shadow:0 24px 60px rgba(110,80,40,.14);max-width:920px}
+.hsw input{flex:1;min-width:0;background:transparent;border:0;font:500 clamp(20px,3vw,34px) var(--serif);color:var(--ink);padding:14px 18px;outline:0}
+.hr{position:absolute;left:0;right:0;top:calc(100% + 10px);background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden;z-index:10;display:none;box-shadow:0 30px 60px rgba(110,60,30,.2)}
+.hr a{display:flex;justify-content:space-between;gap:14px;padding:16px 22px;text-decoration:none;color:var(--ink);border-bottom:1px solid var(--line);font-size:15px}.hr a:hover{background:var(--bg2)}.hr a b{color:var(--acc);white-space:nowrap}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:40px}
+.three div{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:30px}
+.three b{font:italic 500 44px var(--serif);color:var(--acc);display:block}.three p{color:var(--mute);font-size:15px}
+.brs{border-top:1px solid var(--ink);position:relative;isolation:isolate}
+.br{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:34px 0;border-bottom:1px solid var(--line);position:relative}
+.br::before{content:"";position:absolute;inset:0 -4vw;background:var(--bg2);transform:scaleY(0);transform-origin:bottom;transition:transform .5s cubic-bezier(.2,.8,.2,1);z-index:-1}
+.br:hover::before{transform:scaleY(1)}
+.bn{font:italic 500 clamp(48px,9vw,140px)/1 var(--serif);letter-spacing:-.04em;transition:.5s}
+.br:hover .bn{color:var(--acc);transform:translateX(24px)}
+.bl{display:flex;gap:10px;flex-wrap:wrap}
+.bl a{border:1px solid var(--ink);padding:12px 20px;border-radius:99px;text-decoration:none;font:500 14px var(--sans);letter-spacing:.08em;text-transform:uppercase;transition:.3s}
+.bl a:hover{background:var(--acc);color:#fff7e6;border-color:var(--acc)}
+.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;position:relative;padding-top:50px;margin-top:40px}
+@media(max-width:860px){.tl{grid-template-columns:1fr}.tl .ln{display:none}}
+.tl .ln{position:absolute;top:18px;left:0;right:0;height:3px;background:var(--line)}
+.tl .ln i{display:block;height:100%;width:0;background:var(--acc);transition:width 2.2s .3s cubic-bezier(.4,0,.2,1)}
+.tl.in .ln i{width:100%}
+.tl .st{position:relative}
+.tl .st::before{content:"";position:absolute;top:-39px;left:0;width:18px;height:18px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 7px var(--bg);transform:scale(0);transition:transform .5s;transition-delay:calc(var(--k)*.5s + .3s)}
+.tl.in .st::before{transform:scale(1)}
+.tl .st b{font:italic 500 56px var(--serif);color:var(--acc);display:block}
+.tl .st h3{font:500 28px var(--serif);margin:6px 0 8px}.tl .st p{color:var(--mute);font-size:16px}
+@media(prefers-reduced-motion:reduce){.sp .w>span{transform:none;transition:none}.badge svg{animation:none}}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.marq div,#cur .mk,.sh::after,.dm{animation:none}#cur{transition-duration:.01s}.ch{transition:none}}
+
+/* GR premium refinement — additive styling, original layout and palette retained */
+:root{--sans:"Inter Tight","Helvetica Neue",Arial,sans-serif;--serif:"Fraunces",Georgia,serif;--shadow-soft:0 18px 55px rgba(59,42,34,.09)}
+body{letter-spacing:-.008em;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3,h4{ text-wrap:balance }
+.lead{line-height:1.55;letter-spacing:-.018em}
+.eyebrow{font-weight:700;letter-spacing:.24em}
+header{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:linear-gradient(rgba(247,242,232,.97),rgba(247,242,232,.82));border-bottom:1px solid rgba(226,214,189,.55)}
+.logo{letter-spacing:-.045em}
+nav a{font-weight:700;letter-spacing:.085em}
+.hero{isolation:isolate;background:radial-gradient(ellipse at 78% 44%,rgba(201,162,79,.22),transparent 38%),radial-gradient(circle at 82% 42%,var(--bg2),var(--bg) 64%)}
+.hero:after{content:"";position:absolute;inset:auto 4vw 4vh;height:1px;background:linear-gradient(90deg,var(--acc),transparent 70%);opacity:.25}
+.hero h1{max-width:10ch;text-shadow:0 2px 0 rgba(255,255,255,.2)}
+.hero .lead{max-width:42ch}
+.btn,.finder button{isolation:isolate;z-index:0;box-shadow:0 9px 22px rgba(110,30,25,.13);transform:translateZ(0)}
+.btn::before{z-index:0}
+.btn>span{position:relative;z-index:2;display:inline-block;pointer-events:none}
+.btn:hover,.finder button:hover{box-shadow:0 14px 30px rgba(110,30,25,.2);transform:translateY(-2px)}
+.btn:focus-visible,.add:focus-visible,button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid rgba(201,162,79,.8);outline-offset:4px}
+.btn.k::before{z-index:-1}
+.cat,.prod,.rev,.abt>div,.three>div{box-shadow:0 8px 28px rgba(59,42,34,.035);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s}
+.cat:hover,.prod:hover,.rev:hover,.abt>div:hover,.three>div:hover{box-shadow:0 24px 55px rgba(59,42,34,.13)}
+.cat h3{font-size:clamp(25px,2.2vw,32px);line-height:1.05}
+.prod h4{font-weight:700;letter-spacing:-.025em}
+.add{position:relative;z-index:6;box-shadow:0 8px 18px rgba(110,30,25,.12)}
+.add:hover:not(:disabled){background:var(--ink);transform:translateY(-3px);box-shadow:0 12px 24px rgba(59,42,34,.2)}
+.add:active,.btn:active{transform:translateY(0) scale(.985)}
+.arrows button:hover,.tabs button:hover,.chips button:hover{transform:translateY(-2px)}
+.faq summary{font-weight:500;letter-spacing:-.025em}
+.sec{scroll-margin-top:100px}
+/* Category landing pages */
+.cat-hero{position:relative;overflow:hidden;border-radius:34px;padding:clamp(30px,5vw,66px);background:linear-gradient(125deg,rgba(238,227,205,.96),rgba(252,249,242,.94));border:1px solid var(--line);margin:28px 0 46px;isolation:isolate}
+.cat-hero:after{content:"GR";position:absolute;right:-.02em;bottom:-.34em;font:italic 500 clamp(180px,34vw,460px)/1 var(--serif);letter-spacing:-.1em;color:rgba(156,28,28,.055);z-index:-1;pointer-events:none}
+.cat-hero .eyebrow{margin-bottom:18px}.cat-hero h1{max-width:12ch;font-size:clamp(44px,7.3vw,108px)!important;line-height:.98!important}
+.cat-hero .lead{max-width:58ch;margin-top:22px}
+.cat-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.cat-meta span{border:1px solid rgba(140,123,108,.3);background:rgba(252,249,242,.72);border-radius:99px;padding:9px 15px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.cat-intro{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:stretch;margin:48px 0 64px}
+.cat-copy,.cat-aside{border:1px solid var(--line);border-radius:26px;padding:clamp(24px,3.2vw,42px);background:var(--card)}
+.cat-copy h2{font-size:clamp(30px,4vw,54px);margin-bottom:18px}.cat-copy p{color:var(--mute);max-width:65ch}
+.cat-aside{background:var(--bg2)}.cat-aside h3{font:500 30px/1.1 var(--serif);margin-bottom:16px}.cat-aside ul{padding-left:19px;color:var(--mute)}.cat-aside li{padding:5px 0}
+.cat-guide{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:0 0 70px}
+.cat-guide article{border-top:2px solid var(--acc);padding:20px 18px;background:rgba(252,249,242,.7);border-radius:0 0 18px 18px}
+.cat-guide b{display:block;font:italic 500 38px var(--serif);color:var(--acc);margin-bottom:9px}.cat-guide h3{font:500 22px var(--serif);margin-bottom:8px}.cat-guide p{font-size:14px;color:var(--mute)}
+.cat-section-title{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin:58px 0 24px}.cat-section-title h2{font-size:clamp(34px,5vw,66px)}
+.cat-help{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;background:var(--ink);color:#fff7e6;border-radius:26px;padding:30px 34px;margin-top:58px}.cat-help p{color:#e8d8c7;max-width:58ch}.cat-help h3{font:500 30px var(--serif);margin-bottom:8px}
+.cat-faq{margin-top:58px}.cat-faq h2{font-size:clamp(32px,4vw,54px);margin-bottom:22px}
+@media(max-width:760px){.cat-intro{grid-template-columns:1fr}.cat-guide{grid-template-columns:1fr}.cat-hero{border-radius:24px}.cat-help{padding:25px}.hero{min-height:94svh}.hero h1{font-size:clamp(48px,13vw,92px)}}
+@media(hover:none){.tilt{transform:none!important}.tilt::before{display:none}.sh::after{animation:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+</style>
+</head>
+<body class="lock">
+<div id="cur"><div class="lg"><div class="mk">GR</div><div class="nm">GR <b>Motorcycle</b></div></div><div id="cnt">0</div><div id="bar"></div></div>
+<header>
+  <a class="logo" href="#home"><i>GR</i>GR&nbsp;<b>Motorcycle</b></a>
+  <nav><a href="#home" data-n="home">Home</a><a href="#shop" data-n="shop">Shop</a><a href="#pipes" data-n="pipes">DEP Pipes</a><a href="#about" data-n="about">About</a><a href="#shipping" data-n="shipping">Shipping</a><a href="#contact" data-n="contact">Contact</a><a class="cta" href="#request">Request a part</a><button class="cartbtn" aria-label="Search" onclick="location.hash='search'"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></button><button class="cartbtn" id="cartbtn" aria-label="Open cart"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><b id="cc">0</b></button></nav>
+</header>
+<main>
+<div class="page" id="p-home">
+  <div class="hero">
+    <div id="hg"><canvas class="c3" id="hc"></canvas></div>
+    <div class="badge"><svg viewBox="0 0 200 200"><defs><path id="bc" d="M100 100m-78 0a78 78 0 1 1 156 0a78 78 0 1 1-156 0"/></defs><text><textPath href="#bc">GENUINE OEM • NEW OLD STOCK • VINTAGE JAPANESE • </textPath></text></svg><i>GR</i></div>
+    <div class="in">
+      <div class="eyebrow">Cowansville, Québec · Shipping worldwide</div>
+      <h1>Parts for bikes that <em>refuse</em> to die.</h1>
+      <p class="lead" style="margin-top:28px">Factory-new, never-installed Honda, Kawasaki, Suzuki and Yamaha parts for vintage Japanese motorcycles.</p>
+      <form class="finder" id="finder" autocomplete="off">
+        <input class="pn" id="pn" placeholder="OEM part number, e.g. 11013-046" aria-label="OEM part number">
+        <select id="mk" aria-label="Make"><option value="">Make</option><option>Honda</option><option>Kawasaki</option><option>Suzuki</option><option>Yamaha</option></select>
+        <select id="yr" aria-label="Year"><option value="">Year</option></select>
+        <select id="md" aria-label="Model"><option value="">Model</option></select>
+        <button type="submit">Find my part</button>
+      </form>
+      <p class="hint">The OEM part number gives the best results. Searching by model may not show every part in stock for your bike.</p>
+    </div>
+  </div>
+  <div class="marq"><div id="mq"></div></div>
+
+  <div class="sec">
+    <div class="head rv"><div><div class="eyebrow">Categories</div><h2>Browse the <em>whole</em> shelf.</h2></div><div class="arrows" data-for="c1"><button aria-label="Previous">←</button><button aria-label="Next">→</button></div></div>
+    <div class="car" id="c1" data-cats></div>
+  </div>
+
+  <div class="sec">
+    <div class="eyebrow rv">3D view</div>
+    <div class="viewer rv" style="margin:0">
+      <div><h2>Turn it <em>around.</em></h2><p class="lead" style="margin-top:22px">Drag to inspect a DEP Pipes silencer from every angle. Pick a model below.</p><div class="tabs" id="tabs"></div><div class="pr" id="vp" style="font-size:40px"></div><p class="hint" id="vn" style="margin:8px 0 22px"></p><button class="btn" id="va" data-add="1" style="margin-right:10px"><span>Add to cart</span></button><a class="btn k" id="vl" href="#product-1"><span>View product</span></a></div>
+      <canvas class="c3" id="vg"></canvas>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="head rv"><div><div class="eyebrow">Authorized dealer</div><h2>DEP <em>Pipes.</em></h2></div><div class="arrows" data-for="c2"><button aria-label="Previous">←</button><button aria-label="Next">→</button></div></div>
+    <div class="car" id="c2" data-pipes></div>
+  </div>
+
+  <div class="sec"><div class="eyebrow rv">Smart search</div><h2 class="rv">Search by <em>part number.</em></h2><p class="lead rv" style="margin:22px 0 34px">The OEM part number is the most accurate way to find a part. Start typing and matching parts appear instantly.</p>
+<form class="hsw rv" id="hf" autocomplete="off"><input id="hs" placeholder="Try 11013-046" aria-label="Search parts"><button class="btn" type="submit"><span>Search</span></button><div id="hr" class="hr"></div></form>
+<div class="three"><div class="rv sh tilt"><b>1</b><h3 style="font:500 26px var(--serif)">OEM number first</h3><p>The best way to shop. It matches your exact part.</p></div><div class="rv sh tilt" style="--d:.8s"><b>2</b><h3 style="font:500 26px var(--serif)">Then model and year</h3><p>Useful, but it may not show every part we stock for your bike.</p></div><div class="rv sh tilt" style="--d:1.6s"><b>3</b><h3 style="font:500 26px var(--serif)">Still stuck?</h3><p>Send a parts request and we’ll find it for you.</p></div></div></div>
+
+<div class="sec"><div class="head rv"><div><div class="eyebrow">Rare finds</div><h2>New old <em>stock.</em></h2></div><div class="arrows" data-for="c4"><button aria-label="Previous">←</button><button aria-label="Next">→</button></div></div><div class="car" id="c4" data-rare></div></div>
+
+<div class="sec"><div class="eyebrow rv">Shop by brand</div><h2 class="rv" style="margin-bottom:44px">Four <em>marques.</em></h2><div class="brs">
+<div class="br rv"><span class="bn">Honda</span><span class="bl"><a href="#cat-nos-honda-parts">NOS</a><a href="#cat-used-honda-parts">Used</a></span></div>
+<div class="br rv"><span class="bn">Kawasaki</span><span class="bl"><a href="#cat-nos-kawasaki-parts">NOS</a><a href="#cat-used-kawasaki-parts">Used</a></span></div>
+<div class="br rv"><span class="bn">Suzuki</span><span class="bl"><a href="#cat-nos-suzuki-parts">NOS</a><a href="#cat-used-suzuki-parts">Used</a></span></div>
+<div class="br rv"><span class="bn">Yamaha</span><span class="bl"><a href="#cat-nos-yamaha-parts">NOS</a><a href="#cat-used-yamaha-parts">Used</a></span></div>
+<div class="br rv"><span class="bn">Other</span><span class="bl"><a href="#cat-nos-other-parts">NOS</a><a href="#cat-other-used-parts">Used</a></span></div>
+</div></div>
+
+<div class="pin" data-pin="why" style="margin-top:10vh"></div>
+
+  <div class="sec">
+    <div class="head rv"><div><div class="eyebrow">About us</div><h2>Spare parts for <em>vintage</em> Japanese bikes.</h2></div><a class="btn k" href="#about"><span>Our story</span></a></div>
+    <div class="abt">
+      <div class="rv sh tilt"><h3>Inventory</h3><p>A huge inventory of new old stock parts, with more added weekly, plus used parts for vintage dirt bikes and vintage road motorcycles.</p></div>
+      <div class="rv sh tilt" style="--d:.8s"><h3>Service</h3><p>We can order from Honda, Kawasaki, Suzuki and Yamaha, and from most aftermarket brands through our distributors.</p></div>
+      <div class="rv sh tilt" style="--d:1.6s"><h3>Location</h3><p>Cowansville, QC, Canada, with local pickup and national and international shipping.</p></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="head rv"><div><div class="eyebrow">Reviews</div><h2>Riders <em>say.</em></h2></div><div class="arrows" data-for="c3"><button aria-label="Previous">←</button><button aria-label="Next">→</button></div></div>
+    <div class="score rv" style="margin-bottom:34px"><b>5.0</b><div><div style="color:var(--gold);font-size:24px;letter-spacing:.2em">★★★★★</div><span class="samp">Sample layout · replace with real customer reviews</span></div></div>
+    <div class="car" id="c3" data-revs></div>
+  </div>
+
+  <div class="sec"><div class="eyebrow rv">Parts request</div><h2 class="rv">From request to <em>doorstep.</em></h2>
+<div class="tl rv"><div class="ln"><i></i></div>
+<div class="st" style="--k:0"><b>01</b><h3>Send your list</h3><p>Part numbers, or an Excel file for a large list.</p></div>
+<div class="st" style="--k:1"><b>02</b><h3>We check</h3><p>Our shelves first, then our many suppliers.</p></div>
+<div class="st" style="--k:2"><b>03</b><h3>You get a quote</h3><p>We reply as soon as possible.</p></div>
+<div class="st" style="--k:3"><b>04</b><h3>It ships</h3><p>USA usually 1–2 weeks, overseas 2–4 weeks.</p></div></div></div>
+
+<div class="sec"><div class="eyebrow rv">Questions</div><h2 class="rv" style="margin-bottom:34px">Good to <em>know.</em></h2><div class="faq rv"><details><summary>What are new old stock parts?</summary><p>Genuine OEM parts that were never installed, stored since they were made. We keep adding more every week.</p></details><details><summary>Can you get parts you don’t list?</summary><p>Yes. We can order from Honda, Kawasaki, Suzuki and Yamaha, and from most aftermarket brands through our distributors.</p></details><details><summary>Do you ship internationally?</summary><p>Yes. Shipping to the USA usually takes 1–2 weeks and overseas 2–4 weeks. Local pickup is available in Cowansville, QC.</p></details><details><summary>How do I find the right part?</summary><p>Use the OEM part number. Searching by model also works, but it won’t show every part we have in stock for your application.</p></details></div></div>
+
+<div class="stats">
+    <div class="rv"><b>4</b><span>OEM brands</span></div><div class="rv"><b>1–2 wks</b><span>Shipping to the USA</span></div><div class="rv"><b>2–4 wks</b><span>Shipping overseas</span></div><div class="rv"><b>Weekly</b><span>New stock added</span></div>
+  </div>
+  <div class="cta-b rv sh"><div class="eyebrow">Parts request</div><h2>Can’t find it? We’ll <em>find</em> it.</h2><p class="lead">We order directly from the brands. Send a list of part numbers, or upload an Excel file for a large list.</p><a class="btn" href="#request"><span>Request a part</span></a></div>
+</div>
+
+<div class="page" id="p-shop"><div class="sec" style="padding-top:20vh">
+  <div class="eyebrow">Shop</div><h1 style="font-size:clamp(50px,9vw,150px)">Every <em>category.</em></h1>
+  <p class="lead" style="margin:26px 0 54px">New old stock and used parts by brand. Search by OEM part number for the most complete results.</p>
+  <div class="grid" data-cats></div></div></div>
+
+<div class="page" id="p-pipes"><div class="sec" style="padding-top:20vh">
+  <div class="eyebrow">Authorized dealer</div><h1 style="font-size:clamp(50px,9vw,150px)">DEP <em>Pipes.</em></h1>
+  <p class="lead" style="margin:26px 0 54px">We’re proud to be a DEP Pipes authorized dealer. If the pipe you need isn’t listed, send a parts request and we’ll order it for you.</p>
+  <div class="grid" data-pipes></div>
+  <p style="margin-top:34px"><a class="btn" href="#cat-dep-pipes"><span>View all DEP Pipes</span></a></p></div></div>
+
+<div class="page" id="p-about">
+  <div class="sec" style="padding-top:20vh;padding-bottom:6vh"><div class="eyebrow">About us</div><h1 style="font-size:clamp(50px,9vw,150px)">Our <em>story.</em></h1><p class="lead" style="margin-top:26px">Scroll to follow it.</p></div>
+  <div class="pin" data-pin="about"></div>
+  <div class="cta-b rv sh"><h2>Let’s find your <em>part.</em></h2><p class="lead">If it isn’t on the site, we’ll go get it.</p><a class="btn" href="#request"><span>Request a part</span></a></div>
+</div>
+
+<div class="page" id="p-shipping"><div class="sec" style="padding-top:20vh">
+  <div class="eyebrow">Shipping &amp; payment</div><h1 style="font-size:clamp(50px,9vw,150px)">Worldwide, <em>for years.</em></h1>
+  <div class="stats" style="margin:50px -4vw 0"><div><b>1–2 wks</b><span>Usually, to the USA</span></div><div><b>2–4 wks</b><span>Usually, overseas</span></div><div><b>Pickup</b><span>Cowansville, QC</span></div></div>
+  <p class="lead" style="margin-top:44px">Prices show in local currency across many markets, including Canada (CAD), the United States (USD), the euro area (EUR) and the United Kingdom (GBP).</p>
+  <div class="pay"><span>Visa</span><span>Mastercard</span><span>American Express</span><span>PayPal</span><span>Apple Pay</span><span>Google Pay</span><span>Shop Pay</span><span>Discover</span><span>Diners Club</span><span>Bancontact</span><span>iDEAL | Wero</span><span>Satispay</span></div></div></div>
+
+<div class="page" id="p-request"><div class="sec" style="padding-top:20vh">
+  <div class="eyebrow">Parts request</div><h1 style="font-size:clamp(50px,9vw,150px)">We’ll <em>find</em> it.</h1>
+  <p class="lead" style="margin-top:26px">We can order parts directly from Honda, Kawasaki, Suzuki and Yamaha. We don’t run a dealership, so we aim to be cheaper 95% of the time. If it’s discontinued, we can also check with our suppliers. Send a list of part numbers, or upload an Excel file for a large list.</p>
+  <form class="rq" id="rq">
+    <input placeholder="Full name *" aria-label="Full name"><input type="email" placeholder="Email *" aria-label="Email"><input id="rqs" placeholder="Subject *" aria-label="Subject">
+    <textarea placeholder="Message" aria-label="Message"></textarea>
+    <input type="file" aria-label="Attachment (JPG, JPEG, PNG)">
+    <button class="btn" type="submit"><span>Submit</span></button>
+    <p class="hint" id="rqm">Concept form: on the live site this connects to GR Motorcycle’s parts request system.</p>
+  </form></div></div>
+
+<div class="page" id="p-cart"><div class="sec" style="padding-top:20vh">
+<div class="eyebrow">Cart</div><h1 style="font-size:clamp(50px,9vw,150px);margin-bottom:50px">Your <em>cart.</em></h1>
+<div class="two"><div class="box" id="cl"></div>
+<aside class="box sum"><h3>Order summary</h3><div class="row"><span>Subtotal</span><b id="cs"></b></div><div class="row"><span>Shipping</span><span>Confirmed at checkout</span></div><div class="row tot"><span>Estimated total</span><b id="ct"></b></div><a class="btn" href="#checkout"><span>Proceed to checkout</span></a><a class="btn k" href="#pipes"><span>Continue shopping</span></a><div class="perks"><span>✓ Genuine OEM and new old stock</span><span>✓ Shipped worldwide, local pickup available</span><span>✓ Parts request service for anything we don’t stock</span></div></aside></div></div></div>
+
+<div class="page" id="p-checkout"><div class="sec" style="padding-top:20vh">
+<div class="eyebrow">Checkout</div><h1 style="font-size:clamp(50px,9vw,150px);margin-bottom:50px">Almost <em>there.</em></h1>
+<div class="ok" id="cok"><div class="ck">✓</div><h2>Thank you for your <em>order.</em></h2><p class="lead" style="margin:22px auto 30px">Order <b id="ono"></b> is confirmed. This is a concept, so no order was placed.</p><a class="btn" href="#home"><span>Back to home</span></a></div>
+<div class="two" id="cof"><form class="box pd" id="co">
+<div class="fs"><h3>Contact</h3><div class="fl"><input class="fi w" type="email" placeholder="Email" required aria-label="Email"></div></div>
+<div class="fs"><h3>Delivery</h3><div class="fl"><select class="fi w" aria-label="Country"><option>Canada</option><option>United States</option><option>United Kingdom</option><option>France</option><option>Germany</option><option>Australia</option><option>Other country</option></select><input class="fi" placeholder="First name" required aria-label="First name"><input class="fi" placeholder="Last name" required aria-label="Last name"><input class="fi w" placeholder="Address" required aria-label="Address"><input class="fi" placeholder="City" required aria-label="City"><input class="fi" placeholder="Province / state" aria-label="Province or state"><input class="fi" placeholder="Postal / ZIP code" required aria-label="Postal code"><input class="fi" type="tel" placeholder="Phone" aria-label="Phone"></div></div>
+<div class="fs"><h3>Delivery method</h3><label class="opt"><span><input type="radio" name="sm" checked>Shipping to USA<br><small>Usually 1–2 weeks</small></span><small>Quoted at checkout</small></label><label class="opt"><span><input type="radio" name="sm">International shipping<br><small>Usually 2–4 weeks overseas</small></span><small>Quoted at checkout</small></label><label class="opt"><span><input type="radio" name="sm">Local pickup<br><small>Cowansville, QC, Canada</small></span><small>Free</small></label></div>
+<div class="fs"><h3>Payment</h3><label class="opt"><span><input type="radio" name="pm" checked>Credit or debit card<br><small>Visa, Mastercard, American Express, Discover, Diners Club</small></span></label><label class="opt"><span><input type="radio" name="pm">PayPal</span></label><label class="opt"><span><input type="radio" name="pm">Apple Pay, Google Pay or Shop Pay</span></label><p class="hint">Concept page: no payment details are collected here. On the live store, payment runs through the secure Shopify checkout.</p></div>
+<button class="btn" type="submit" style="width:100%"><span>Place order</span></button><p class="hint" id="com"></p></form>
+<aside class="box sum"><h3>Your order</h3><div id="ol"></div><div class="row"><span>Subtotal</span><b id="ks"></b></div><div class="row"><span>Shipping</span><span>Quoted after order review</span></div><div class="row tot"><span>Total</span><b id="kt"></b></div></aside></div></div></div>
+
+<div class="page" id="p-contact"><div class="sec" style="padding-top:20vh">
+<div class="eyebrow">Contact us</div><h1 style="font-size:clamp(50px,9vw,150px)">Let’s <em>talk.</em></h1>
+<p class="lead" style="margin:26px 0 54px">Questions about a part, an order or shipping? Send us a message. For a specific part, a parts request is the fastest way to a quote.</p>
+<div class="two" style="grid-template-columns:1.2fr 1fr">
+<form class="box pd" id="cf"><div class="fl"><input class="fi" placeholder="Full name *" required aria-label="Full name"><input class="fi" type="email" placeholder="Email *" required aria-label="Email"><select class="fi w" aria-label="Topic"><option>Parts question</option><option>Order help</option><option>Shipping</option><option>Something else</option></select><input class="fi w" placeholder="Subject *" required aria-label="Subject"><textarea class="fi w" placeholder="Message" aria-label="Message"></textarea></div><button class="btn" type="submit" style="margin-top:16px"><span>Send message</span></button><p class="hint" id="cfm">Concept form: on the live site this connects to GR Motorcycle’s inbox.</p></form>
+<div class="cinfo"><div class="map sh"><svg viewBox="0 0 200 200" fill="none"><circle cx="100" cy="100" r="90" stroke="#e2d6bd"/><circle cx="100" cy="100" r="60" stroke="#e2d6bd"/><circle cx="100" cy="100" r="30" stroke="#e2d6bd"/><path d="M100 138c-20-26-30-40-30-56a30 30 0 0 1 60 0c0 16-10 30-30 56z" fill="#9c1c1c"/><circle cx="100" cy="82" r="11" fill="#f7f2e8"/></svg><span>Cowansville, Québec</span></div>
+<div class="ic"><h4>Location</h4><p>Cowansville, QC, Canada. Local pickup available.</p></div><div class="ic"><h4>Shipping</h4><p>USA usually 1–2 weeks. Overseas usually 2–4 weeks.</p></div><div class="ic"><h4>Looking for a part?</h4><p>Send a parts request and we’ll reply with a quote as soon as possible. <a href="#request">Request a part →</a></p></div></div></div>
+<h2 style="font-size:clamp(36px,5.5vw,84px);margin:12vh 0 30px">Quick <em>answers.</em></h2>
+<div class="faq"><details><summary>What’s the best way to find my part?</summary><p>Enter the OEM part number in the search bar. You can also search by model, but this won’t show every part we have in stock for your application.</p></details><details><summary>Can you get parts you don’t list?</summary><p>Yes. We can order from Honda, Kawasaki, Suzuki and Yamaha, and from most aftermarket brands through our distributors. Even discontinued parts, we can check with our suppliers.</p></details><details><summary>Do you ship internationally?</summary><p>Yes, we’ve shipped worldwide for years. Shipping to the USA usually takes 1–2 weeks and overseas 2–4 weeks.</p></details><details><summary>Can I pick up my order?</summary><p>Yes, local pickup is available in Cowansville, QC, Canada.</p></details><details><summary>What are new old stock parts?</summary><p>Genuine OEM parts that were never installed, stored since they were made. We keep adding more every week.</p></details></div>
+</div></div>
+
+<div class="page" id="p-cat"></div><div class="page" id="p-prod"></div><div class="page" id="p-search"></div>
+<div class="page" id="p-account"><div class="sec" style="padding-top:20vh"><div class="eyebrow">Account</div><h1 style="font-size:clamp(50px,9vw,150px)">Welcome <em>back.</em></h1>
+<div class="two" style="margin-top:50px;grid-template-columns:1fr 1fr"><form class="box pd cform"><h3 style="font:500 32px var(--serif);margin-bottom:18px">Sign in</h3><div class="fl"><input class="fi w" type="email" placeholder="Email" required aria-label="Email"><input class="fi w" type="password" placeholder="Password" required aria-label="Password"></div><button class="btn" type="submit" style="margin-top:16px"><span>Sign in</span></button><p class="hint"></p></form>
+<form class="box pd cform"><h3 style="font:500 32px var(--serif);margin-bottom:18px">Create an account</h3><div class="fl"><input class="fi" placeholder="First name" required aria-label="First name"><input class="fi" placeholder="Last name" required aria-label="Last name"><input class="fi w" type="email" placeholder="Email" required aria-label="Email"><input class="fi w" type="password" placeholder="Password" required aria-label="Password"></div><button class="btn" type="submit" style="margin-top:16px"><span>Create account</span></button><p class="hint"></p></form></div>
+<div class="box pd" style="margin-top:20px"><h3 style="font:500 32px var(--serif);margin-bottom:10px">Your orders</h3><p class="lead">Sign in to see your orders and track your shipments.</p></div></div></div>
+<footer class="ft"><div class="trust"><div><i>✓</i><span>Genuine OEM &amp; NOS<small>Never-installed factory parts</small></span></div><div><i>✈</i><span>Worldwide shipping<small>USA 1–2 weeks, overseas 2–4</small></span></div><div><i>⌂</i><span>Local pickup<small>Cowansville, QC, Canada</small></span></div><div><i>✉</i><span>Parts request service<small>We’ll find what we don’t stock</small></span></div></div>
+<div class="fg"><div><a class="logo" href="#home" style="margin-bottom:18px"><i>GR</i>GR&nbsp;<b>Motorcycle</b></a><p>Spare parts for vintage Japanese motorcycles. New old stock and used parts for Honda, Kawasaki, Suzuki and Yamaha.</p><a href="https://www.facebook.com/grmotorcycle" target="_blank" rel="noopener">Facebook ↗</a></div>
+<div><h5>Shop</h5><div id="fl"></div></div>
+<div><h5>Company</h5><a href="#home">Home</a><a href="#about">About us</a><a href="#shipping">Shipping &amp; payment</a><a href="#request">Parts request</a><a href="#contact">Contact us</a></div>
+<div><h5>Support</h5><a href="#cart">Cart</a><a href="#checkout">Checkout</a><a href="#account">My account &amp; orders</a><a href="https://grmotorcycle.com/policies/privacy-policy" target="_blank" rel="noopener">Privacy policy ↗</a></div>
+<div><h5>Subscribe to our emails</h5><p>Be the first to know about new parts and exclusive offers.</p><form class="sub" onsubmit="return false"><input placeholder="Email" aria-label="Email"><button class="btn" type="submit"><span>Join</span></button></form></div></div>
+  <div class="bigw">GR <em style="color:var(--acc)">Motorcycle</em></div>
+  
+  <div class="fb"><span>© 2026 GR Motorcycle · Cowansville, QC, Canada · Concept redesign</span><div class="pay"><span>Visa</span><span>Mastercard</span><span>Amex</span><span>PayPal</span><span>Apple Pay</span><span>Google Pay</span><span>Shop Pay</span></div><span>Canada | CAD $</span><button class="top" onclick="scrollTo({top:0,behavior:'smooth'})">↑ Top</button></div>
+</footer>
+</main>
+<div id="ov" data-close></div>
+<aside id="drawer" aria-label="Shopping cart"><div class="dh"><h3>Your cart</h3><button data-close aria-label="Close cart">✕</button></div><div class="dlist" id="dl"></div><div class="df"><div class="row"><span>Subtotal</span><b id="ds"></b></div><p>Shipping and taxes are confirmed at checkout.</p><a class="btn k" href="#cart" data-close><span>View cart</span></a><a class="btn" href="#checkout" data-close><span>Checkout</span></a></div></aside>
+<div class="note">Concept redesign · real GR Motorcycle content</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+var B='https://grmotorcycle.com/collections/';
+var CATS=[['NOS Honda parts','nos-honda-parts','Lower cover rubber 63702-ZV5-000','H','NOS'],['NOS Kawasaki parts','nos-kawasaki-parts','Air cleaner element 11013-046','K','NOS'],['NOS Suzuki parts','nos-suzuki-parts','Joint driven 64680-45113','S','NOS'],['NOS Yamaha parts','nos-yamaha-parts','Fuel tank rubbers 122-24181-00-00','Y','NOS'],['NOS Other parts','nos-other-parts','Can-Am TNT MX shift lever rubber','◆','NOS'],['USED Honda parts','used-honda-parts','Action Accessories final sprocket','H','USED'],['USED Kawasaki parts','used-kawasaki-parts','DEP Pipes KDX200 silencer','K','USED'],['USED Suzuki parts','used-suzuki-parts','DEP Pipes RM125 round silencer','S','USED'],['USED Yamaha parts','used-yamaha-parts','DEP Pipes DT125R DT200R pipe','Y','USED'],['Other used parts','other-used-parts','Circle Industries rear sprocket 44T','◆','USED']];
+var PIPES=[['DEP Pipes Kawasaki KDX200 1986–1988 C1–C3 Silencer · DEPK2908','dep-pipes-kawasaki-kdx200-1986-1987-1988-c1-c3-silencer-depk2908',1,'KDX200','1.15'],['DEP Pipes Kawasaki KX500 1988–2004 Silencer · DEPK2502','dep-pipes-kawasaki-kx500-1988-2004-silencer-depk2502',0,'KX500','1.35'],['DEP Pipes Suzuki RM500 1983–1986 Silencer · DEPS2223','dep-pipes-suzuki-rm500-1983-1984-1985-1986-silencer-deps2223',0,'RM500','1.25'],['DEP Pipes Suzuki RM250 1982–1983 Silencer · DEPS2201','dep-pipes-suzuki-rm250-1982-1983-silencer-deps2201',0,'RM250','1']];
+var ITEMS=[{n:'DEP Pipes Kawasaki KDX200 1986–1988 C1–C3 Silencer · DEPK2908',c:'used-kawasaki-parts',pn:'DEPK2908',sku:'DEPK2908',p:206.17,o:1,dep:1,b:'Kawasaki',l:'K'},{n:'DEP Pipes Kawasaki KX500 1988–2004 Silencer · DEPK2502',c:'used-kawasaki-parts',pn:'DEPK2502',sku:'DEPK2502',p:206.17,dep:1,b:'Kawasaki',l:'K'},{n:'DEP Pipes Suzuki RM500 1983–1986 Silencer · DEPS2223',c:'used-suzuki-parts',pn:'DEPS2223',sku:'DEPS2223',p:206.17,dep:1,b:'Suzuki',l:'S'},{n:'DEP Pipes Suzuki RM250 1982–1983 Silencer · DEPS2201',c:'used-suzuki-parts',pn:'DEPS2201',sku:'DEPS2201',p:206.17,dep:1,b:'Suzuki',l:'S'},{n:'DEP Pipes Suzuki RM125 1984–1985 Round Silencer · DEPS2103',c:'used-suzuki-parts',pn:'DEPS2103',sku:'DEPS2103',p:0,dep:1,b:'Suzuki',l:'S'},{n:'DEP Pipes Yamaha DT125R DT200R 1988 Pipe, Nickel · DEPY2905',c:'used-yamaha-parts',pn:'DEPY2905',sku:'DEPY2905',p:0,dep:1,b:'Yamaha',l:'Y'},{n:'NOS Honda (Lower) Cover Rubber · 63702-ZV5-000',c:'nos-honda-parts',pn:'63702-ZV5-000',sku:'H179',p:0,nos:1,b:'Honda',l:'H'},{n:'NOS Kawasaki Air Cleaner Element · 11013-046',c:'nos-kawasaki-parts',pn:'11013-046',sku:'K45',p:0,nos:1,b:'Kawasaki',l:'K'},{n:'NOS Suzuki Joint Driven GS650 VS800GL GV700GL GL800 GS1100 · 64680-45113',c:'nos-suzuki-parts',pn:'64680-45113',sku:'S9',p:0,nos:1,b:'Suzuki',l:'S'},{n:'NOS Yamaha DT100 DT80 Fuel Tank Rubbers · 122-24181-00-00',c:'nos-yamaha-parts',pn:'122-24181-00-00',sku:'Y58',p:0,nos:1,b:'Yamaha',l:'Y'},{n:'NOS Can-Am TNT MX Shifter Shift Lever Arm Pedal Rubber · 420-230-200',c:'nos-other-parts',pn:'420-230-200',sku:'CA5',p:0,nos:1,b:'Can-Am',l:'◆'},{n:'Aftermarket Honda Action Accessories Final Sprocket · 41201-323-010-A',c:'used-honda-parts',pn:'41201-323-010-A',sku:'H214',p:0,b:'Honda',l:'H'},{n:'Aftermarket Circle Industries Rear Sprocket 44T · 38W-25444-20-00-J',c:'other-used-parts',pn:'38W-25444-20-00-J',sku:'J14',p:0,b:'Circle Industries',l:'◆'}];
+var REVS=['Found a part I’d been hunting for years, still in the original packaging.','Fast reply on my parts request and a fair quote.','Arrived well packed and exactly as described.','Great to deal with a shop that really knows vintage Japanese bikes.','Shipping overseas was smooth and the part fit perfectly.'];
+function dm(n){var s='';for(var i=0;i<n;i++)s+='<i class="dm" style="left:'+(10+Math.random()*78)+'%;top:'+(8+Math.random()*78)+'%;--s:'+(9+Math.random()*13)+'px;--d:'+(Math.random()*2.6).toFixed(2)+'s"></i>';return s}
+document.querySelectorAll('[data-cats]').forEach(function(el){el.innerHTML=CATS.map(function(c,i){return '<a class="cat tilt sh" style="--d:'+(i*.35)+'s" href="'+B+c[1]+'" target="_blank" rel="noopener"><div class="ph"><span class="tg'+(c[4]==='USED'?' u':'')+'">'+c[4]+'</span><b>'+c[3]+'</b>'+dm(4)+'</div><div class="tx"><div><h3>'+c[0]+'</h3><small>e.g. '+c[2]+'</small></div><span class="ar">↗</span></div></a>'}).join('')});
+document.querySelectorAll('[data-pipes]').forEach(function(el){el.innerHTML=PIPES.map(function(p,i){return '<a class="prod tilt sh" style="--d:'+(i*.5)+'s" href="https://grmotorcycle.com/products/'+p[1]+'" target="_blank" rel="noopener"><div class="art"><span class="tag'+(p[2]?' o':'')+'">'+(p[2]?'Sold out':'In stock')+'</span><div class="pipe"></div>'+dm(5)+'</div><div class="t"><h4>'+p[0]+'</h4><div class="pr">$206.17 CAD</div>'+(p[2]?'<button class="add" disabled>Sold out</button>':'<button class="add" data-add="'+i+'">Add to cart</button>')+'</div></a>'}).join('')});
+document.querySelectorAll('[data-revs]').forEach(function(el){el.innerHTML=REVS.map(function(r,i){return '<div class="rev tilt sh" style="--d:'+(i*.6)+'s"><div class="st">★★★★★</div><p>“'+r+'”</p><small>Sample review · Customer '+(i+1)+'</small></div>'}).join('')});
+var mq=document.getElementById('mq'),w=['Honda','Kawasaki','Suzuki','Yamaha','New old stock','DEP Pipes','Vintage dirt bikes','OEM parts'],s='';w.forEach(function(x){s+=x+'<span>✦</span>'});mq.innerHTML=s+s;
+// carousels
+document.querySelectorAll('.arrows').forEach(function(a){var c=document.getElementById(a.dataset.for),b=a.querySelectorAll('button');b[0].onclick=function(){c.scrollBy({left:-c.clientWidth*.7,behavior:'smooth'})};b[1].onclick=function(){c.scrollBy({left:c.clientWidth*.7,behavior:'smooth'})}});
+// tilt
+document.addEventListener('pointermove',function(e){var t=e.target.closest&&e.target.closest('.tilt');if(!t)return;var r=t.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;t.style.setProperty('--ry',((x-.5)*10).toFixed(1)+'deg');t.style.setProperty('--rx',((.5-y)*10).toFixed(1)+'deg');t.style.setProperty('--gx',x*100+'%');t.style.setProperty('--gy',y*100+'%')});
+document.addEventListener('pointerout',function(e){var t=e.target.closest&&e.target.closest('.tilt');if(t&&!t.contains(e.relatedTarget)){t.style.setProperty('--rx','0deg');t.style.setProperty('--ry','0deg')}});
+// finder
+var M={Honda:['CB750','CB550','XR250','CR250R'],Kawasaki:['KDX200','KX500','KZ1000','KX250'],Suzuki:['RM250','RM500','GS650','GS1100'],Yamaha:['DT100','DT125R','DT200R','XS650']};
+var mk=document.getElementById('mk'),yr=document.getElementById('yr'),md=document.getElementById('md');
+for(var y=1995;y>=1965;y--){var o=document.createElement('option');o.textContent=y;yr.appendChild(o)}
+mk.onchange=function(){md.innerHTML='<option value="">Model</option>';(M[mk.value]||[]).forEach(function(m){var o=document.createElement('option');o.textContent=m;md.appendChild(o)})};
+document.getElementById('finder').onsubmit=function(e){e.preventDefault();var q=document.getElementById('pn').value.trim()||[mk.value,md.value,yr.value].filter(Boolean).join(' ');window.open('https://grmotorcycle.com/search?q='+encodeURIComponent(q),'_blank','noopener')};
+document.getElementById('rq').onsubmit=function(e){e.preventDefault();document.getElementById('rqm').textContent='Thank you. This is a concept form, so nothing was sent.'};
+// cart
+var CART={},PRICE=206.17;
+try{CART=JSON.parse(localStorage.getItem('grcart')||'{}')||{}}catch(e){CART={}}
+function save(){try{localStorage.setItem('grcart',JSON.stringify(CART))}catch(e){}}
+function money(v){return '$'+v.toFixed(2)+' CAD'}
+function count(){var n=0;for(var k in CART)n+=CART[k];return n}
+function items(){return Object.keys(CART).filter(function(k){return CART[k]>0})}
+function line(i,q){var p=PIPES[i];return '<div class="li"><div class="th"><div class="pipe"></div></div><div class="inf"><b>'+p[0]+'</b><span>'+money(PRICE)+'</span><div class="qty"><button data-q="-1" data-i="'+i+'" aria-label="Less">−</button><em>'+q+'</em><button data-q="1" data-i="'+i+'" aria-label="More">+</button><button class="rm" data-rm="'+i+'">Remove</button></div></div><div class="lt">'+money(q*PRICE)+'</div></div>'}
+function renderAll(){var it=items(),n=count(),cc=document.getElementById('cc'),s=money(n*PRICE);cc.textContent=n;cc.style.display=n?'grid':'none';
+ var h=it.length?it.map(function(k){return line(k,CART[k])}).join(''):'<div class="empty">Your cart is empty.<br><a href="#shop" data-close>Browse the shelf →</a></div>';
+ document.getElementById('dl').innerHTML=h;document.getElementById('cl').innerHTML=h;
+ document.getElementById('ol').innerHTML=it.length?it.map(function(k){var p=PIPES[k];return '<div class="li"><div class="th"><div class="pipe"></div></div><div class="inf"><b>'+p[0]+'</b><span>Qty '+CART[k]+'</span></div><div class="lt">'+money(CART[k]*PRICE)+'</div></div>'}).join(''):'<div class="empty">Your cart is empty.</div>';
+ ['ds','cs','ct','ks','kt'].forEach(function(id){document.getElementById(id).textContent=s})}
+function openCart(){document.getElementById('drawer').classList.add('open');document.getElementById('ov').classList.add('open')}
+function closeCart(){document.getElementById('drawer').classList.remove('open');document.getElementById('ov').classList.remove('open')}
+function add(i,btn){var r=btn.getBoundingClientRect(),c=document.getElementById('cartbtn').getBoundingClientRect(),f=document.createElement('div');f.className='fly';f.innerHTML='<div class="pipe" style="width:38px;height:9px;box-shadow:none;transform:none"></div>';
+ f.style.left=(r.left+r.width/2-28)+'px';f.style.top=(r.top+r.height/2-28)+'px';document.body.appendChild(f);
+ var dx=c.left+c.width/2-(r.left+r.width/2),dy=c.top+c.height/2-(r.top+r.height/2);
+ function done(){f.remove();CART[i]=(CART[i]||0)+1;save();renderAll();var cb=document.getElementById('cartbtn');cb.classList.remove('bump');void cb.offsetWidth;cb.classList.add('bump');openCart()}
+ if(!f.animate){done();return}
+ var a=f.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:'translate('+dx*.45+'px,'+(dy*.45-130)+'px) scale(1.3) rotate(-14deg)',opacity:1,offset:.45},{transform:'translate('+dx+'px,'+dy+'px) scale(.25) rotate(25deg)',opacity:.5}],{duration:window.matchMedia('(prefers-reduced-motion:reduce)').matches?10:850,easing:'cubic-bezier(.5,0,.3,1)'});a.onfinish=done}
+document.addEventListener('click',function(e){var b=e.target.closest('[data-add]');if(b){e.preventDefault();e.stopPropagation();if(!b.disabled)add(+b.dataset.add,b);return}
+ b=e.target.closest('[data-q]');if(b){var i=b.dataset.i;CART[i]=Math.max(0,(CART[i]||0)+ +b.dataset.q);save();renderAll();return}
+ b=e.target.closest('[data-rm]');if(b){delete CART[b.dataset.rm];save();renderAll();return}
+ if(e.target.closest('#cartbtn')){openCart();return}
+ if(e.target.closest('[data-close]'))closeCart()},true);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeCart()});
+document.getElementById('co').onsubmit=function(e){e.preventDefault();if(!count()){document.getElementById('com').textContent='Your cart is empty. Add a part first.';return}document.getElementById('ono').textContent='GR-'+Math.floor(100000+Math.random()*900000);CART={};save();renderAll();document.getElementById('cof').style.display='none';document.getElementById('cok').style.display='block';window.scrollTo(0,0)};
+document.getElementById('cf').onsubmit=function(e){e.preventDefault();document.getElementById('cfm').textContent='Thank you. This is a concept form, so nothing was sent.'};
+document.getElementById('fl').innerHTML=CATS.map(function(c){return '<a href="'+B+c[1]+'" target="_blank" rel="noopener">'+c[0]+'</a>'}).join('');
+renderAll();
+// ---- v4: internal catalog, product, search and account pages; overrides
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function pr(p){return p.p?money(p.p):'Price on request'}
+function catOf(s){for(var i=0;i<CATS.length;i++)if(CATS[i][1]===s)return CATS[i];return s==='dep-pipes'?['DEP Pipes','dep-pipes','Silencers and pipes','D','DEP']:null}
+function catName(s){var c=catOf(s);return c?c[0]:s}
+function card(i){var p=ITEMS[i],b=p.p?(p.o?'<button class="add" disabled>Sold out</button>':'<button class="add" data-add="'+i+'">Add to cart</button>'):'<button class="add q" data-quote="'+i+'">Request a quote</button>';return '<div class="prod tilt sh" style="--d:'+((i%6)*.45)+'s"><a class="cov" href="#product-'+i+'" aria-label="'+esc(p.n)+'"></a><div class="art"><span class="tag'+(p.o?' o':'')+'">'+(p.o?'Sold out':(p.nos?'NOS':'In stock'))+'</span>'+(p.dep?'<div class="pipe"></div>':'<b class="lt2">'+p.l+'</b>')+dm(4)+'</div><div class="t"><small class="bk">'+catName(p.c)+'</small><h4>'+esc(p.n)+'</h4><div class="pr">'+pr(p)+'</div>'+b+'</div></div>'}
+function catCard(c,i){return '<a class="cat tilt sh" style="--d:'+(i*.35)+'s" href="#cat-'+c[1]+'"><div class="ph"><span class="tg'+(c[4]==='USED'?' u':'')+'">'+c[4]+'</span><b>'+c[3]+'</b>'+dm(4)+'</div><div class="tx"><div><h3>'+c[0]+'</h3><small>e.g. '+c[2]+'</small></div><span class="ar">↗</span></div></a>'}
+document.querySelectorAll('[data-cats]').forEach(function(el){el.innerHTML=CATS.map(catCard).join('')});
+document.querySelectorAll('[data-pipes]').forEach(function(el){var n=el.id==='c2'?4:6,h='';for(var i=0;i<n;i++)h+=card(i);el.innerHTML=h});
+document.querySelectorAll('[data-rare]').forEach(function(el){var h='';for(var i=6;i<ITEMS.length;i++)h+=card(i);el.innerHTML=h});
+document.getElementById('fl').innerHTML=CATS.map(function(c){return '<a href="#cat-'+c[1]+'">'+c[0]+'</a>'}).join('')+'<a href="#cat-dep-pipes">DEP Pipes</a>';
+// cart overrides
+function total(){var s=0;for(var k in CART)s+=CART[k]*((ITEMS[k]&&ITEMS[k].p)||0);return s}
+function line(i,q){var p=ITEMS[i];return '<div class="li"><a class="th" href="#product-'+i+'" data-close>'+(p.dep?'<div class="pipe"></div>':'<b class="lt2s">'+p.l+'</b>')+'</a><div class="inf"><b>'+esc(p.n)+'</b><span>'+money(p.p)+'</span><div class="qty"><button data-q="-1" data-i="'+i+'" aria-label="Less">−</button><em>'+q+'</em><button data-q="1" data-i="'+i+'" aria-label="More">+</button><button class="rm" data-rm="'+i+'">Remove</button></div></div><div class="lt">'+money(q*p.p)+'</div></div>'}
+function renderAll(){var it=items().filter(function(k){return ITEMS[k]&&ITEMS[k].p}),n=count(),cc=document.getElementById('cc'),s=money(total());cc.textContent=n;cc.style.display=n?'grid':'none';
+ var h=it.length?it.map(function(k){return line(k,CART[k])}).join(''):'<div class="empty">Your cart is empty.<br><a href="#shop" data-close>Browse the shelf →</a></div>';
+ document.getElementById('dl').innerHTML=h;document.getElementById('cl').innerHTML=h;
+ document.getElementById('ol').innerHTML=it.length?it.map(function(k){var p=ITEMS[k];return '<div class="li"><div class="th">'+(p.dep?'<div class="pipe"></div>':'<b class="lt2s">'+p.l+'</b>')+'</div><div class="inf"><b>'+esc(p.n)+'</b><span>Qty '+CART[k]+'</span></div><div class="lt">'+money(CART[k]*p.p)+'</div></div>'}).join(''):'<div class="empty">Your cart is empty.</div>';
+ ['ds','cs','ct','ks','kt'].forEach(function(id){document.getElementById(id).textContent=s})}
+function add(i,btn){var q=+(btn.dataset.qty||1),r=btn.getBoundingClientRect(),c=document.getElementById('cartbtn').getBoundingClientRect(),f=document.createElement('div');f.className='fly';f.innerHTML='<div class="pipe" style="width:38px;height:9px;box-shadow:none;transform:none"></div>';
+ f.style.left=(r.left+r.width/2-28)+'px';f.style.top=(r.top+r.height/2-28)+'px';document.body.appendChild(f);
+ var dx=c.left+c.width/2-(r.left+r.width/2),dy=c.top+c.height/2-(r.top+r.height/2);
+ function done(){f.remove();CART[i]=(CART[i]||0)+q;save();renderAll();var cb=document.getElementById('cartbtn');cb.classList.remove('bump');void cb.offsetWidth;cb.classList.add('bump');openCart()}
+ if(!f.animate){done();return}
+ var a=f.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:'translate('+dx*.45+'px,'+(dy*.45-130)+'px) scale(1.3) rotate(-14deg)',opacity:1,offset:.45},{transform:'translate('+dx+'px,'+dy+'px) scale(.25) rotate(25deg)',opacity:.5}],{duration:window.matchMedia('(prefers-reduced-motion:reduce)').matches?10:850,easing:'cubic-bezier(.5,0,.3,1)'});a.onfinish=done}
+// search
+var SQ='',CF={f:'all',s:'name',slug:''};
+function yearOK(n,y){var a=(n.match(/\b(19|20)\d{2}\b/g)||[]).map(Number);if(!a.length)return true;return y>=Math.min.apply(null,a)&&y<=Math.max.apply(null,a)}
+function find(q){var t=q.toUpperCase().split(/\s+/).filter(Boolean),r=[];ITEMS.forEach(function(p,i){var h=(p.n+' '+p.pn+' '+p.sku+' '+p.b+' '+catName(p.c)).toUpperCase();if(t.every(function(x){return /^(19|20)\d\d$/.test(x)?yearOK(p.n,+x):h.indexOf(x)>-1}))r.push(i)});return r}
+function renderSearch(){var ids=SQ?find(SQ):[],sg=['11013-046','63702-ZV5-000','KDX200','DT125R','Honda','Sprocket'];
+ document.getElementById('p-search').innerHTML='<div class="sec" style="padding-top:20vh"><div class="eyebrow">Search</div><h1 style="font-size:clamp(46px,8vw,128px)">'+(SQ?'Results for <em>'+esc(SQ)+'</em>':'Find your <em>part.</em>')+'</h1><form class="finder" id="sf" autocomplete="off"><input class="pn" id="sq" value="'+esc(SQ)+'" placeholder="OEM part number, model or year" aria-label="Search" style="flex:3 1 300px"><button type="submit">Search</button></form><p class="hint">The OEM part number gives the best results. Searching by model may not show every part in stock for your bike.</p><div class="chips" style="margin:26px 0 44px">'+sg.map(function(s){return '<button data-s="'+s+'">'+s+'</button>'}).join('')+'</div>'+(SQ?(ids.length?'<p class="hint" style="margin-bottom:20px">'+ids.length+(ids.length===1?' result':' results')+'</p><div class="grid">'+ids.map(card).join('')+'</div>':'<div class="cta-b sh" style="margin:4vh 0 0"><div class="eyebrow">No match yet</div><h2>We can still <em>find</em> it.</h2><p class="lead">This concept shows a sample of the catalog. Send a parts request and we’ll check our shelves and suppliers.</p><a class="btn" href="#request"><span>Request a part</span></a></div>'):'')+'</div>'}
+// category
+function catItems(s){var r=[];ITEMS.forEach(function(p,i){if(p.c===s||(s==='dep-pipes'&&p.dep))r.push(i)});return r}
+function gridCat(){var ids=catItems(CF.slug);if(CF.f==='stock')ids=ids.filter(function(i){return !ITEMS[i].o});if(CF.f==='priced')ids=ids.filter(function(i){return ITEMS[i].p});var s=CF.s;ids.sort(function(a,b){var A=ITEMS[a],B=ITEMS[b];return s==='low'?(A.p||1e9)-(B.p||1e9):s==='high'?(B.p||0)-(A.p||0):A.n.localeCompare(B.n)});
+ document.getElementById('cgrid').innerHTML=ids.length?ids.map(card).join(''):'<div class="empty">No parts match this filter.</div>';document.getElementById('ccount').textContent=ids.length+(ids.length===1?' part':' parts');
+ document.querySelectorAll('#p-cat .chips button').forEach(function(b){b.classList.toggle('on',b.dataset.f===CF.f)})}
+function renderCat(slug){var c=catOf(slug),pg=document.getElementById('p-cat');CF.slug=slug;CF.f='all';CF.s='name';
+ if(!c){pg.innerHTML='<div class="sec" style="padding-top:20vh"><h1>Category <em>not found.</em></h1><p style="margin-top:30px"><a class="btn" href="#shop"><span>All categories</span></a></p></div>';return}
+ var dep=slug==='dep-pipes',brand=dep?'DEP Pipes':c[0].replace(/^(NOS|USED) /,'').replace(/ parts$/,''),nos=c[4]==='NOS',kind=dep?'DEP Pipes':(nos?'new old stock':'used and aftermarket'),ids=catItems(slug);
+ var intro=dep?'Explore DEP Pipes exhaust components available through GR Motorcycle, an authorized DEP Pipes dealer. Browse the listed models and send a request if the exact fitment you need is not shown.':nos?'Explore genuine, factory-new parts that were never installed. These new old stock (NOS) listings are organized by manufacturer to make it easier to identify the correct original component for your vintage motorcycle.':'Browse used and aftermarket parts selected for vintage motorcycles. Check each listing carefully, compare its part number and application, and contact GR Motorcycle if you would like help confirming a match.';
+ var focus=dep?'Match the model and year range shown in each DEP Pipes listing.':(nos?'Use the OEM part number as your primary reference. Original manufacturer numbers are the most reliable way to narrow down the exact component.':'Review the listed condition and part number before ordering. If your motorcycle has variations by year or model, ask us to double-check the application.');
+ var label=dep?'Authorized DEP Pipes dealer':(nos?'Genuine OEM · Never installed':'Vintage motorcycle components');
+ var brandNote=dep?'DEP Pipes products are presented by motorcycle model and product code.':('This collection focuses on '+brand+' motorcycle parts. '+(nos?'The featured reference in this category is ':'A featured reference in this category is ')+c[2]+'. Check the exact number against your own parts fiche before ordering.');
+ var guidance=dep?['Check the exact motorcycle model and production years','Compare the DEP product code shown in the listing','Ask us to source another fitment if it is not displayed']:nos?['Match the complete OEM part number','Confirm the model and year in your parts fiche','Ask us to verify before ordering if unsure']:['Read the item title and part number closely','Confirm condition and application with us','Send your model details for a fitment check'];
+ var features=dep?[['Fitment first','Use the model and year range in each product title to narrow your search.'],['Dealer support','GR Motorcycle can help with DEP Pipes enquiries and sourcing requests.'],['Need another model?','Send the bike model and year and we can check whether it can be ordered.']]:nos?[['Factory-new stock','NOS means genuine OEM parts that were never installed.'],['OEM identification','Part numbers help distinguish similar-looking components and revisions.'],['More to discover','Inventory is updated regularly, so request a part if you cannot find it.']]:[['Vintage focus','Listings are selected around vintage dirt bikes and road motorcycles.'],['Check the details','Part numbers and model references help you assess the right application.'],['Ask before ordering','We can help check a listing against your motorcycle details.']];
+ var faq=dep?[['How do I confirm DEP Pipes fitment?','Compare the model and year range in the product title with your motorcycle. Contact us if you want us to double-check.'],['Can you source a model not listed here?','Send your motorcycle model, year and the DEP product code if you have it. We can check with our suppliers.'],['Where do I ask about availability?','Use the parts request form and include the model and year you need.']]:nos?[['What does NOS mean?','New old stock refers to genuine OEM parts that were never installed and have been stored since they were made.'],['How do I find the correct OEM part?','Use the full OEM part number from your motorcycle parts fiche. If you are unsure, send us your model and year.'],['Can you find parts not shown here?','Yes. GR Motorcycle can check with Honda, Kawasaki, Suzuki, Yamaha and aftermarket distributors.']]:[['Are these all original OEM parts?','This category can include used and aftermarket items. Check the individual listing and contact us if you need clarification.'],['How can I confirm compatibility?','Compare the part number and listed application. Send us your motorcycle model and year if you would like help checking.'],['Can I request a part that is not listed?','Yes. Send the part number or a description and we will check our inventory and suppliers.']];
+ pg.innerHTML='<div class="sec" style="padding-top:17vh"><div class="bcn"><a href="#home">Home</a><span>/</span><a href="#shop">Shop</a><span>/</span><b>'+esc(c[0])+'</b></div><section class="cat-hero rv"><div class="eyebrow">'+esc(label)+'</div><h1>'+esc(brand)+' <em>'+(dep?'exhaust.':nos?'NOS parts.':'parts.')+'</em></h1><p class="lead">'+intro+'</p><p class="hint" style="margin-top:14px;max-width:62ch">'+brandNote+'</p><div class="cat-meta"><span>'+esc(c[4])+'</span><span>'+esc(brand)+'</span><span>'+ids.length+' sample listings</span><span>Worldwide shipping</span></div></section><div class="cat-intro"><div class="cat-copy rv"><div class="eyebrow">Inside this collection</div><h2>Find the right part. <em>Keep riding.</em></h2><p>'+focus+'</p><p style="margin-top:16px">GR Motorcycle is based in Cowansville, Québec, Canada, and offers local pickup as well as national and international shipping. If you cannot find the exact component, send a parts request and include as much motorcycle detail as possible.</p></div><aside class="cat-aside rv"><h3>Before you order</h3><ul>'+guidance.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul><a class="btn k" href="#request" style="margin-top:20px"><span>Ask us to find a part</span></a></aside></div><div class="cat-guide">'+features.map(function(x,i){return '<article class="rv"><b>0'+(i+1)+'</b><h3>'+x[0]+'</h3><p>'+x[1]+'</p></article>'}).join('')+'</div><div class="cat-section-title"><div><div class="eyebrow">Browse inventory</div><h2>Available <em>listings.</em></h2></div><span id="ccount" class="hint"></span></div><div class="tools"><div class="chips"><button data-f="all">All listings</button><button data-f="stock">Available</button><button data-f="priced">With price</button></div><div><select id="csort" class="fi" style="width:auto;padding:12px 16px"><option value="name">Sort: Name</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option></select></div></div><div class="grid" id="cgrid"></div><div class="cat-help rv"><div><h3>Not seeing your exact part?</h3><p>Send the OEM number, motorcycle model and year. We can check our shelves and suppliers for the component you need.</p></div><a class="btn" href="#request"><span>Request a part</span></a></div><section class="cat-faq"><div class="eyebrow">Helpful answers</div><h2>Good to <em>know.</em></h2><div class="faq">'+faq.map(function(x){return '<details><summary>'+x[0]+'</summary><p>'+x[1]+'</p></details>'}).join('')+'</div></section><div class="cat-section-title"><div><div class="eyebrow">Keep exploring</div><h2>More <em>categories.</em></h2></div><a class="btn k" href="#shop"><span>All categories</span></a></div><div class="car" style="margin:0 -4vw">'+CATS.filter(function(x){return x[1]!==slug}).map(catCard).join('')+'</div></div>';
+ gridCat();document.title=c[0]+' | GR Motorcycle — Vintage Motorcycle Parts';
+}
+// product
+function renderProd(i){var p=ITEMS[i],pg=document.getElementById('p-prod');
+ if(!p){pg.innerHTML='<div class="sec" style="padding-top:20vh"><h1>Part <em>not found.</em></h1><p style="margin-top:30px"><a class="btn" href="#shop"><span>Back to shop</span></a></p></div>';return}
+ var buy=p.p?(p.o?'<button class="btn" disabled><span>Sold out</span></button><a class="btn k" href="#request"><span>Request this part</span></a>':'<div class="q2"><button data-pq="-1" aria-label="Less">−</button><em id="pqn">1</em><button data-pq="1" aria-label="More">+</button></div><button class="btn" id="pab" data-add="'+i+'" data-qty="1"><span>Add to cart</span></button>'):'<button class="btn" data-quote="'+i+'"><span>Request a quote</span></button>';
+ var kind=p.dep?'A DEP Pipes exhaust part supplied by GR Motorcycle, an authorized DEP Pipes dealer.':p.nos?'New old stock (NOS): a genuine OEM part that was never installed.':'An aftermarket part for vintage motorcycles.';
+ var rel=ITEMS.map(function(x,k){return k}).filter(function(k){return k!==i}).sort(function(a,b){return (ITEMS[b].c===p.c)-(ITEMS[a].c===p.c)}).slice(0,6);
+ pg.innerHTML='<div class="sec" style="padding-top:18vh"><div class="bcn"><a href="#home">Home</a><span>/</span><a href="#shop">Shop</a><span>/</span><a href="#cat-'+p.c+'">'+catName(p.c)+'</a></div><div class="pdg"><div class="gal sh tilt"><span class="tag'+(p.o?' o':'')+'">'+(p.o?'Sold out':(p.nos?'NOS':'In stock'))+'</span>'+(p.dep?'<div class="pipe"></div>':'<b class="lt2">'+p.l+'</b>')+dm(9)+'</div><div><div class="eyebrow">'+p.b+'</div><h1 style="font-size:clamp(32px,4.2vw,62px);line-height:1.04">'+esc(p.n)+'</h1><div class="meta">STOCK CODE '+p.sku+' · PART NO. '+p.pn+'</div><div class="pr" style="font-size:46px;margin:26px 0 8px">'+pr(p)+'</div>'+(p.p?'':'<p class="hint">Price is quoted by GR Motorcycle. Send a request and we’ll reply as soon as possible.</p>')+'<div class="buy">'+buy+'</div><div class="perks"><span>✓ Genuine OEM and new old stock specialists</span><span>✓ Shipped worldwide, local pickup in Cowansville</span><span>✓ Can’t find it? We’ll source it</span></div><div class="faq" style="margin-top:34px"><details open><summary>Details</summary><p>'+kind+' Part number '+p.pn+'.</p></details><details><summary>Compatibility</summary><p>Listed for: '+esc(p.n.replace(/ · .*/,''))+'. Always match the OEM part number to your bike’s parts list. Send us your model and year and we’ll double-check.</p></details><details><summary>Shipping &amp; pickup</summary><p>Shipping to the USA usually takes 1–2 weeks and overseas 2–4 weeks. Local pickup is available in Cowansville, QC, Canada.</p></details></div></div></div><h2 style="font-size:clamp(34px,5vw,72px);margin:12vh 0 30px">You may also <em>like.</em></h2><div class="car" style="margin:0 -4vw">'+rel.map(card).join('')+'</div></div>'}
+// events
+document.addEventListener('click',function(e){var b=e.target.closest('[data-f]');if(b){CF.f=b.dataset.f;gridCat();return}
+ b=e.target.closest('[data-pq]');if(b){var el=document.getElementById('pqn'),n=Math.max(1,Math.min(20,+el.textContent+ +b.dataset.pq));el.textContent=n;document.getElementById('pab').dataset.qty=n;return}
+ b=e.target.closest('[data-s]');if(b){SQ=b.dataset.s;renderSearch();after();return}
+ b=e.target.closest('[data-quote]');if(b){e.preventDefault();e.stopPropagation();window.__q='Quote request: '+ITEMS[+b.dataset.quote].n;location.hash='request'}},true);
+document.addEventListener('change',function(e){if(e.target.id==='csort'){CF.s=e.target.value;gridCat()}});
+document.addEventListener('submit',function(e){var f=e.target;if(f.id==='sf'){e.preventDefault();SQ=document.getElementById('sq').value.trim();renderSearch();after()}else if(f.id==='hf'){e.preventDefault();SQ=document.getElementById('hs').value.trim();location.hash='search'}else if(f.classList.contains('cform')){e.preventDefault();f.querySelector('.hint').textContent='Concept form: nothing was sent.'}});
+document.getElementById('finder').onsubmit=function(e){e.preventDefault();SQ=document.getElementById('pn').value.trim()||[mk.value,md.value,yr.value].filter(Boolean).join(' ');location.hash='search'};
+// home live search + typewriter
+(function(){var hs=document.getElementById('hs'),hr=document.getElementById('hr');hs.addEventListener('input',function(){var q=hs.value.trim(),ids=q?find(q).slice(0,5):[];hr.innerHTML=ids.map(function(i){var p=ITEMS[i];return '<a href="#product-'+i+'"><span>'+esc(p.n)+'</span><b>'+pr(p)+'</b></a>'}).join('')||(q?'<a href="#request"><span>No match yet. Send us a parts request</span><b>→</b></a>':'');hr.style.display=hr.innerHTML?'block':'none'});
+ document.addEventListener('click',function(e){if(!e.target.closest('#hf'))hr.style.display='none'});
+ var PH=['11013-046','63702-ZV5-000','64680-45113','122-24181-00-00','420-230-200','KDX200','DT125R'],pi=0,ci=0,dr=1;
+ setInterval(function(){if(document.activeElement===hs)return;var w=PH[pi];ci+=dr;if(ci>w.length+8)dr=-1;hs.placeholder='Try '+w.slice(0,Math.max(0,Math.min(ci,w.length)));if(ci<=0){dr=1;pi=(pi+1)%PH.length}},110)})();
+// word-split headings, progress bar, glow
+function splitEl(el){if(el.dataset.sp)return;el.dataset.sp=1;var k=0;(function w(n){Array.prototype.slice.call(n.childNodes).forEach(function(c){if(c.nodeType===3){var f=document.createDocumentFragment();c.textContent.split(/(\s+)/).forEach(function(t){if(!t)return;if(/^\s+$/.test(t)){f.appendChild(document.createTextNode(' '));return}var s=document.createElement('span'),i2=document.createElement('span');s.className='w';i2.textContent=t;i2.style.setProperty('--k',k++);s.appendChild(i2);f.appendChild(s)});c.parentNode.replaceChild(f,c)}else if(c.nodeType===1)w(c)})})(el);el.classList.add('sp')}
+function splitAll(){document.querySelectorAll('.page.on h1,.page.on h2').forEach(splitEl)}
+function arm(){document.querySelectorAll('.page.on .rv,.page.on .sp').forEach(function(el){io.observe(el)})}
+function after(){splitAll();arm();pinTick();if(window.rsz)window.rsz()}
+var glow=document.createElement('div');glow.id='curg';document.body.appendChild(glow);var spb=document.createElement('div');spb.id='spb';document.body.appendChild(spb);
+addEventListener('pointermove',function(e){glow.style.transform='translate('+(e.clientX-170)+'px,'+(e.clientY-170)+'px)'});
+addEventListener('scroll',function(){var m=document.documentElement.scrollHeight-innerHeight;spb.style.width=(m>0?scrollY/m*100:0)+'%'},{passive:true});
+// router overrides
+function route(){var h=(location.hash||'#home').slice(1);if(/^(cat|product)-[a-z0-9-]+$/.test(h)||h==='search'||h==='account')return h;return names.indexOf(h)<0?'home':h}
+function show(n){document.title='GR Motorcycle — Parts that outlive the bikes';var pg=n;if(n.indexOf('cat-')===0){pg='cat';renderCat(n.slice(4))}else if(n.indexOf('product-')===0){pg='prod';renderProd(+n.slice(8))}else if(n==='search')renderSearch();
+ document.querySelectorAll('.page').forEach(function(p){p.classList.toggle('on',p.id==='p-'+pg)});
+ var nv=(pg==='cat'||pg==='prod'||pg==='search')?'shop':n;document.querySelectorAll('nav a[data-n]').forEach(function(a){a.classList.toggle('on',a.dataset.n===nv)});
+ window.scrollTo(0,0);closeCart();renderAll();
+ if(n==='checkout'&&count()){document.getElementById('cof').style.display='';document.getElementById('cok').style.display='none'}
+ if(n==='request'&&window.__q){document.getElementById('rqs').value=window.__q;window.__q=''}
+ after()}
+// pinned stories
+var ST={why:[['Genuine OEM, <em>never used.</em>','New old stock: factory parts that never went on a bike, with a huge inventory and more added weekly.'],['All four <em>brands.</em>','We can order from Honda, Kawasaki, Suzuki and Yamaha, and most aftermarket brands through our distributors.'],['Cheaper, <em>by design.</em>','We don’t run a dealership, so we aim to be cheaper 95% of the time.'],['Not in stock? <em>We hunt.</em>','Even discontinued parts: we check with our many suppliers. Send a part request and we’ll reply with a quote.'],['Shipped <em>worldwide.</em>','USA usually 1–2 weeks, overseas 2–4 weeks, with local pickup in Cowansville.']],
+about:[['Vintage Japanese, <em>our specialty.</em>','Our business is spare parts for vintage Japanese motorcycles.'],['A huge <em>inventory.</em>','New old stock added weekly, a good selection of used parts for vintage dirt bikes, and a smaller selection for vintage road bikes.'],['One request, <em>every brand.</em>','Motorcycle, ATV, snowmobile, power equipment, boat and more, from the four makers and most aftermarket brands.'],['Based in <em>Cowansville.</em>','Quebec, Canada, with local pickup as well as national and international shipping.'],['Shipping the <em>world.</em>','Years of worldwide shipping and great success with international buyers.']]};
+var NS='http://www.w3.org/2000/svg';
+function gear(){var p='',N=28,r1=100,r2=118,i;for(i=0;i<N;i++){var a=i/N*6.2832,d=6.2832/N,q=[[a,r1],[a+d*.2,r2],[a+d*.45,r2],[a+d*.65,r1]];q.forEach(function(v,j){p+=(i+j?'L':'M')+(Math.cos(v[0])*v[1]).toFixed(1)+' '+(Math.sin(v[0])*v[1]).toFixed(1)})}p+='Z M32 0A32 32 0 1 0-32 0A32 32 0 1 0 32 0Z';for(i=0;i<6;i++){var b=i/6*6.2832,cx=Math.cos(b)*66,cy=Math.sin(b)*66;p+='M'+(cx+17).toFixed(1)+' '+cy.toFixed(1)+'A17 17 0 1 0 '+(cx-17).toFixed(1)+' '+cy.toFixed(1)+'A17 17 0 1 0 '+(cx+17).toFixed(1)+' '+cy.toFixed(1)+'Z'}return '<svg viewBox="-125 -125 250 250"><defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffaf0"/><stop offset=".5" stop-color="#d9c9a5"/><stop offset="1" stop-color="#b79a5b"/></linearGradient></defs><path fill="url(#gg)" fill-rule="evenodd" stroke="#9c1c1c" stroke-width="1.6" d="'+p+'"/></svg>'}
+var pins=[];document.querySelectorAll('[data-pin]').forEach(function(el){var d=ST[el.dataset.pin];el.style.setProperty('--n',d.length+1);
+ el.innerHTML='<div class="stick"><div class="gearw"><div class="big">01</div>'+gear()+dm(6)+'</div><div class="chs">'+d.map(function(c,i){return '<div class="ch"><div class="eyebrow">'+(el.dataset.pin==='why'?'Why GR Motorcycle':'Our story')+'</div><h3>'+c[0]+'</h3><p>'+c[1]+'</p></div>'}).join('')+'</div><div class="cnt"></div><div class="prog"><i></i></div></div>';pins.push(el)});
+function pinTick(){pins.forEach(function(el){var pg=el.closest('.page');if(!pg||!pg.classList.contains('on'))return;var r=el.getBoundingClientRect(),tot=el.offsetHeight-innerHeight,p=Math.max(0,Math.min(1,-r.top/tot)),chs=el.querySelectorAll('.ch'),n=chs.length,i=Math.min(n-1,Math.floor(p*n));
+ chs.forEach(function(c,k){c.classList.toggle('on',k===i);c.classList.toggle('pa',k<i)});el.querySelector('svg').style.transform='rotate('+(p*540)+'deg)';el.querySelector('.prog i').style.width=(p*100)+'%';el.querySelector('.big').textContent='0'+(i+1);el.querySelector('.cnt').textContent='0'+(i+1)+' / 0'+n})}
+addEventListener('scroll',function(){requestAnimationFrame(pinTick)},{passive:true});
+// reveal + router
+var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('in')})},{threshold:.1});
+function arm(){document.querySelectorAll('.page.on .rv').forEach(function(el){io.observe(el)})}
+var cur=document.getElementById('cur'),cnt=document.getElementById('cnt'),bar=document.getElementById('bar'),busy=false,names=['home','shop','pipes','about','shipping','request','contact','cart','checkout'];
+function route(){var h=(location.hash||'#home').slice(1);return names.indexOf(h)<0?'home':h}
+function show(n){document.querySelectorAll('.page').forEach(function(p){p.classList.toggle('on',p.id==='p-'+n)});document.querySelectorAll('nav a[data-n]').forEach(function(a){a.classList.toggle('on',a.dataset.n===n)});window.scrollTo(0,0);closeCart();renderAll();if(n==='checkout'&&count()){document.getElementById('cof').style.display='';document.getElementById('cok').style.display='none'}arm();pinTick();if(window.rsz)window.rsz()}
+function go(){if(busy)return;var n=route();busy=true;cur.className='prep';void cur.offsetWidth;cur.className='';cnt.style.display='none';bar.style.display='none';
+ setTimeout(function(){show(n);setTimeout(function(){cur.className='out';setTimeout(function(){busy=false;if(route()!==n)go()},850)},350)},850)}
+addEventListener('hashchange',go);
+var t0=performance.now(),dur=2200;
+(function tick(t){var p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);cnt.textContent=Math.round(e*100);bar.style.width=(e*100)+'%';
+ if(p<1)requestAnimationFrame(tick);else{show(route());setTimeout(function(){cur.className='out';document.body.classList.remove('lock')},300)}})(t0);
+// 3D
+function mkS(cv,fov,z){var R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});R.setPixelRatio(Math.min(devicePixelRatio,2));var S=new THREE.Scene(),C=new THREE.PerspectiveCamera(fov,1,.1,100);C.position.z=z;
+ S.add(new THREE.AmbientLight(0xfff3dd,.7));var L=new THREE.DirectionalLight(0xffffff,1.1);L.position.set(4,5,6);S.add(L);var P=new THREE.PointLight(0xffd98a,1.6,40);S.add(P);
+ function rs(){var w=cv.clientWidth||400,h=cv.clientHeight||400;R.setSize(w,h,false);C.aspect=w/h;C.updateProjectionMatrix()}addEventListener('resize',rs);rs();return{R:R,S:S,C:C,P:P,rs:rs}}
+function diamonds(S,n,rad){var g=new THREE.Group(),a=[];for(var i=0;i<n;i++){var m=new THREE.Mesh(new THREE.OctahedronGeometry(.16),new THREE.MeshPhongMaterial({color:0xfff2c8,emissive:0xc9a24f,specular:0xffffff,shininess:150,flatShading:true}));m.userData={a:Math.random()*6.28,r:rad*(.8+Math.random()*.6),y:(Math.random()-.5)*rad,s:.4+Math.random()*.8,o:Math.random()*6};g.add(m);a.push(m)}S.add(g);return a}
+function dmTick(a,t){a.forEach(function(m){var u=m.userData,k=.5+.5*Math.sin(t*.002*u.s+u.o);m.position.set(Math.cos(u.a+t*.0003*u.s)*u.r,u.y+Math.sin(t*.001*u.s+u.o)*.3,Math.sin(u.a+t*.0003*u.s)*u.r);m.scale.setScalar(.2+k);m.rotation.y=t*.003;m.rotation.x=t*.002})}
+var rm=matchMedia('(prefers-reduced-motion:reduce)').matches,fns=[];
+try{
+var H=mkS(document.getElementById('hc'),38,11),N=34,sh=new THREE.Shape(),Ro=3.4,Rb=3.0;
+for(var i=0;i<N;i++){var a=i/N*6.2832,wd=6.2832/N,pp=[[a,Rb],[a+wd*.18,Ro],[a+wd*.42,Ro],[a+wd*.6,Rb]];pp.forEach(function(q,j){var x=Math.cos(q[0])*q[1],yy=Math.sin(q[0])*q[1];(i===0&&j===0)?sh.moveTo(x,yy):sh.lineTo(x,yy)})}
+var h=new THREE.Path();h.absarc(0,0,.9,0,6.2832,true);sh.holes.push(h);for(var k=0;k<6;k++){var b=k/6*6.2832,hp=new THREE.Path();hp.absarc(Math.cos(b)*1.95,Math.sin(b)*1.95,.62,0,6.2832,true);sh.holes.push(hp)}
+var g=new THREE.ExtrudeGeometry(sh,{depth:.5,bevelEnabled:true,bevelSize:.05,bevelThickness:.05,bevelSegments:2,curveSegments:16});g.center();
+var grp=new THREE.Group();grp.add(new THREE.Mesh(g,new THREE.MeshPhongMaterial({color:0xd8c79f,specular:0xffffff,shininess:90})));grp.add(new THREE.LineSegments(new THREE.EdgesGeometry(g,35),new THREE.LineBasicMaterial({color:0x9c1c1c})));H.S.add(grp);
+var hd=diamonds(H.S,14,4.6),mx=0,my=0;addEventListener('pointermove',function(e){mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5});
+fns.push(function(t){if(!document.getElementById('p-home').classList.contains('on'))return;var sc=Math.min(scrollY/innerHeight,1.5);grp.rotation.set(.4+my*.5+sc*.8,(rm?0:t*.0003)+mx*.8+sc*1.5,sc*.6);H.P.position.set(Math.cos(t*.001)*6,Math.sin(t*.0013)*5,6);dmTick(hd,t);H.R.render(H.S,H.C)});
+// product viewer
+var V=mkS(document.getElementById('vg'),34,11),pg=new THREE.Group(),sil=new THREE.Group(),
+pr=[[0,-2.6],[.42,-2.6],[.72,-2.1],[.95,-1.3],[1,-.2],[1,1.3],[.9,2.2],[.55,2.8],[.3,3.1],[0,3.1]].map(function(v){return new THREE.Vector2(v[0],v[1])}),
+mat=new THREE.MeshPhongMaterial({color:0xd9d4c6,specular:0xffffff,shininess:140});
+var body=new THREE.Mesh(new THREE.LatheGeometry(pr,48),mat);sil.add(body);
+var band=new THREE.Mesh(new THREE.TorusGeometry(1.01,.07,16,64),new THREE.MeshPhongMaterial({color:0x9c1c1c,shininess:80}));band.rotation.x=Math.PI/2;band.position.y=.5;sil.add(band);
+var inl=new THREE.Mesh(new THREE.CylinderGeometry(.22,.22,1.6,24),mat);inl.position.y=-3.2;sil.add(inl);
+var tab=new THREE.Mesh(new THREE.BoxGeometry(.5,.8,.1),mat);tab.position.set(0,.2,1.05);sil.add(tab);
+sil.rotation.z=Math.PI/2;pg.add(sil);V.S.add(pg);var vd=diamonds(V.S,12,3.4);
+var tabs=document.getElementById('tabs'),vp=document.getElementById('vp'),vn=document.getElementById('vn'),vl=document.getElementById('vl');
+function pick(i){var p=PIPES[i];sil.scale.set(1,+p[4],1);tabs.querySelectorAll('button').forEach(function(b,k){b.classList.toggle('on',k===i)});vp.textContent='$206.17 CAD';vn.textContent=p[0]+(p[2]?' (currently sold out)':'');vl.href='#product-'+i;var va=document.getElementById('va');va.dataset.add=i;va.disabled=!!p[2];va.querySelector('span').textContent=p[2]?'Sold out':'Add to cart'}
+PIPES.forEach(function(p,i){var b=document.createElement('button');b.textContent=p[3];b.onclick=function(){pick(i)};tabs.appendChild(b)});pick(1);
+var drag=0,lx=0,ry=0.6,rx=.15,vc=document.getElementById('vg');vc.onpointerdown=function(e){drag=1;lx=e.clientX;vc.setPointerCapture(e.pointerId);vc.style.cursor='grabbing'};vc.onpointerup=function(){drag=0;vc.style.cursor='grab'};vc.onpointermove=function(e){if(drag){ry+=(e.clientX-lx)*.01;lx=e.clientX}};
+fns.push(function(t){if(!document.getElementById('p-home').classList.contains('on'))return;if(!drag&&!rm)ry+=.006;pg.rotation.set(rx,ry,0);V.P.position.set(Math.cos(t*.0012)*5,Math.sin(t*.0009)*4,5);dmTick(vd,t);V.R.render(V.S,V.C)});
+window.rsz=function(){H.rs();V.rs()};
+(function loop(t){fns.forEach(function(f){f(t)});requestAnimationFrame(loop)})(0);
+}catch(e){['hc','vg'].forEach(function(id){var c=document.getElementById(id);if(c)c.style.display='none'})}
+})();
+</script>
+</body>
+</html>
